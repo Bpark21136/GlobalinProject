@@ -13,6 +13,5 @@
 <P> han1g has joined </P>
 <p> YoraEmong wanna ChocoEmong </p>
 <p> I wanna Pizza </p>
-<p> gogogo </p>
 </body>
 </html>
