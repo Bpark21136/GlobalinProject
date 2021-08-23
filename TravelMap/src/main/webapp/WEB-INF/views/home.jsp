@@ -11,5 +11,7 @@
 
 <P>  The time on the server is ${serverTime}. </P>
 <P> han1g has joined </P>
+<p> YoraEmong wanna ChocoEmong </p>
+<p> I wanna Pizza </p>
 </body>
 </html>
