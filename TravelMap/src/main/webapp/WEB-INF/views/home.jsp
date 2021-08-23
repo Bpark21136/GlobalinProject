@@ -10,6 +10,6 @@
 </h1>
 
 <P>  The time on the server is ${serverTime}. </P>
-<p> han1g has joined </p>
+<P> han1g has joined </P>
 </body>
 </html>
