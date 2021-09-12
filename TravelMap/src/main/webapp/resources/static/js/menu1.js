@@ -38,17 +38,25 @@ function initMap() {
     zoom: 6,
   });
   
-  map.addListener("click",function (event) {
+  map.addListener("click",defaultMapClickListener);
+
+  const newPointModeButton = document.createElement("div");
+  createNewPointModeButton(newPointModeButton);
+  
+  
+}
+
+function defaultMapClickListener(event) {
     console.log('click');
     disablePOIClick(event);
 	stopBounce(selectedMarker);
 	disableHighlight(selectedMarkerId);
 	selectedMarker = null;
 	selectedMarkerId = null;
-  });
-  
-  //mark(markers);
-}
+}//기본 맵 클릭 리스너
+
+
+
 function isIconMouseEvent(e) {
 	  return "placeId" in e;
 }
@@ -183,7 +191,102 @@ function loadReview() {
 			google.maps.event.trigger(markers[i], 'click');
 		});
 			
-	});
-	
-	
+	});	
 }
+
+/*위치 찍기 관련 함수들*/
+function createNewPointModeButton(controlDiv) {
+	  const controlUI = document.createElement("div");
+
+  controlUI.style.backgroundColor = "#fff";
+  controlUI.style.border = "2px solid #fff";
+  controlUI.style.borderRadius = "3px";
+  controlUI.style.boxShadow = "0 2px 6px rgba(0,0,0,.3)";
+  controlUI.style.cursor = "pointer";
+  controlUI.style.marginTop = "8px";
+  controlUI.style.marginBottom = "22px";
+  controlUI.style.textAlign = "center";
+  controlDiv.appendChild(controlUI);
+
+  // Set CSS for the control interior.
+  const defaultButton = document.createElement("div");
+  defaultButton.style.color = "rgb(25,25,25)";
+  defaultButton.style.fontFamily = "Roboto,Arial,sans-serif";
+  defaultButton.style.fontSize = "16px";
+  defaultButton.style.lineHeight = "38px";
+  defaultButton.style.paddingLeft = "5px";
+  defaultButton.style.paddingRight = "5px";
+  defaultButton.innerHTML = "장소 추가 | 場所追加";
+  controlUI.appendChild(defaultButton);
+
+  const cancelOkButton = document.createElement("div");
+  const cancelButton = document.createElement("button");
+  const okButton = document.createElement("button");
+
+  cancelOkButton.style.display = 'none';
+  controlUI.appendChild(cancelOkButton);
+
+
+  cancelButton.innerHTML = "cancel";
+  $(cancelButton).addClass('btn btn-danger');
+  cancelOkButton.appendChild(cancelButton);
+
+  okButton.innerHTML = "ok";
+  okButton.setAttribute('disabled','true');
+  $(okButton).addClass('btn btn-success');
+  cancelOkButton.appendChild(okButton);
+  
+  var marker = {value:null};
+  defaultButton.addEventListener("click", (e) => {toggleNewPointMode(true,marker,defaultButton,cancelOkButton,okButton);});
+  cancelButton.addEventListener("click", (e) => {toggleNewPointMode(false,marker,defaultButton,cancelOkButton,okButton);});
+  okButton.addEventListener("click",(e) => {popUpConfirm(marker);});
+  map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(controlDiv);
+}
+
+
+function toggleNewPointMode(flag,marker, defaultButton,cancelOkButton,okButton) {
+	if(flag) {
+		initSearch(); // 지도에 찍힌 핑 초기화
+		map.setOptions({draggableCursor:'crosshair'}); // 커서 크로스헤어로 변경
+		google.maps.event.clearInstanceListeners(map);// map 클릭이벤트 초기화
+		map.addListener("click",(e) => {newPointModeMapClickListener(e,marker,okButton)});//위치 추가모드 맵 클릭리스너 추가
+		defaultButton.style.display = 'none'; // 기본버튼 안보이게
+		cancelOkButton.style.display = 'block'; // 확인 취소 버튼 보이게
+	} else {
+		map.setOptions({draggableCursor:''});
+		defaultButton.style.display = 'block';//기본 버튼 보이게
+		cancelOkButton.style.display = 'none';//확인 취소 버튼 안보이게
+		okButton.setAttribute('disabled','true');//확인버튼 비활성화
+		google.maps.event.clearInstanceListeners(map);// map 클릭이벤트 초기화
+		map.addListener("click",defaultMapClickListener);//기본 맵 클릭 리스너
+		if(marker.value !== null) {
+		console.log(marker);
+		marker.value.setMap(null);
+		}
+	}
+}
+
+function newPointModeMapClickListener(event,marker,okButton) {
+	if(marker.value !== null) {
+		console.log(marker);
+		marker.value.setMap(null);
+	}
+	marker.value = new google.maps.Marker({
+			position: event.latLng,
+			map,
+			optimized: false,
+			draggable: true,
+		});
+	okButton.setAttribute('disabled','false');
+}
+function popUpConfirm(marker) {
+	var juso = marker.value.getPosition();
+	var result = confirm(juso); 
+	if(result) { 
+		
+	} else {
+		
+	}
+}
+
+
