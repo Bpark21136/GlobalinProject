@@ -10,12 +10,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- icon script -->
     <script src="https://kit.fontawesome.com/99f7873797.js" crossorigin="anonymous"></script>
-    <script src="<c:url value="/resources/static/libs/js/menu3_main.js"/>"></script>
+    <script src="<c:url value="/resources/static/js/menu3_main.js"/>"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<c:url value="/resources/static/menu3_style.css"/>">
-    <title>travel</title>
+    <title>Home</title>
 </head>
 <body>
 	<!-- faq -->
