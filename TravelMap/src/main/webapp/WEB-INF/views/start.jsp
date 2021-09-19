@@ -8,13 +8,20 @@
 <head>
  	<link rel="stylesheet" href="<c:url value="/resources/static/libs/bootstrap-4.4.1-dist/css/bootstrap.min.css"/>">
  	<script src="<c:url value="/resources/static/libs/jquery-3.6.0.min.js"/>"></script>
+ 	<!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> -->
 	<script src="<c:url value="/resources/static/libs/bootstrap-4.4.1-dist/js/bootstrap.min.js"/>"></script>
 	<%--bootstrap import --%>
 	<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 	<%--googleMap import--%>
 	<link rel="stylesheet" href="<c:url value="/resources/static/sidebar.css"/>">
 	<link rel="stylesheet" href="<c:url value="/resources/static/shrinkable_layout.css"/>">
+	
 	<link rel="stylesheet" href="<c:url value="/resources/static/libs/font-awesome-4.7.0/css/font-awesome.css"/>">
+	<%--fontawesome import --%>
+	
+	<link rel="stylesheet" href="<c:url value="/resources/static/libs/summernote-0.8.18-dist/summernote-lite.css"/>">
+	<script src="<c:url value="/resources/static/libs/summernote-0.8.18-dist/summernote-lite.js"/>"></script>
+    <%--summernote import--%>
 	<title>Home</title>
 </head>
 <body>

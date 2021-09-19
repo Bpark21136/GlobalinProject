@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html>
 	<div class="row">
         <!--  <div class="input-group col-md-4">-->
@@ -17,9 +20,15 @@
 		</div>
 		<div id="review-list-wrapper" class="shrink">
 			<div>
-				<button class="btn btn-outline-secondary" onclick="shrinkToggle('review-list-wrapper');">
+				<button style="width:38px;height:38px"class="btn btn-outline-secondary" onclick="shrinkToggle('review-list-wrapper');">
 	                   <i class="fa fa-angle-left"></i>
 	               </button>
+	           <button style="position:relative;width:100px;left:calc(300px - 100px - 100px - 38px - 8px); visibility:visible;"  class="btn btn-outline-danger" onclick="deletePoint();">
+                   장소삭제
+               </button>
+               <button style="position:relative;width:100px;left:calc(300px - 100px - 100px - 38px - 12px);" class="btn btn-outline-primary" onclick="toggleReviewForm(true);">
+                   리뷰쓰기
+               </button>
 			</div>
 			<div id="review-list">
 			

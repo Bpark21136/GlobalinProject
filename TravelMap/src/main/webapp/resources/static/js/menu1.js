@@ -14,8 +14,12 @@ const lngCenter = 131.89;
 const latCenter = 37.21;
 const CENTER = {lat: latCenter, lng: lngCenter};
 //초기 지도 중앙
-const points = [{lat : 37.566668,lng: 126.978416},{lat :35.68963375008537,lng: 139.69209961979337},{lat :36.320541,lng: 131.806041},
-	{lat :35.845552,lng: 134.094556},{lat : 35.130716816459135,lng: 132.60117561767552}];
+
+const points = [{position:{lat : 37.566668,lng: 126.978416}, name:'서울시청',id: '1'},
+	{position:{lat :35.68963375008537,lng: 139.69209961979337}, name:'도쿄도청',id: '2'},
+	{position:{lat :36.320541,lng: 131.806041}, name:'바다',id:'3'},
+	{position:{lat :35.845552,lng: 134.094556}, name:'바다',id:'4'},
+	{position:{lat : 35.130716816459135,lng: 132.60117561767552}, name:'sambe rest Area',id:'5'}];
 const reviews= [{title : "리뷰1", content: "내용1",author: "작성자1",country : "korea"},{title : "리뷰2", content: "내용2",author: "작성자2",country : "japan"}]
 var markers = new Array();
 	
@@ -71,7 +75,8 @@ function disablePOIClick(event) {
 function mark(points) {
 	console.log('mark');
 	markers = new Array();
-	points.forEach((position,i) => {
+	points.forEach((el,i) => {
+		const position = el.position;
 		const marker = new google.maps.Marker({
 			position,
 			map,
@@ -87,6 +92,9 @@ function mark(points) {
 			selectedMarker = marker;
 			selectedMarkerId = i;
 			focusToMarker(marker);
+			if(!$('#review-list-wrapper').hasClass('shrink')){
+				shrinkToggle('review-list-wrapper');
+			}
 		})//마커 클릭이벤트 : 점프 뛰고 사이드바에 하이라이트주고 포커싱
 	});
 	
@@ -109,14 +117,18 @@ function focusToMarker(marker) {
 }
 
 
-/*sidebar*/
+/*-------------sidebar------------------*/
 
 var query;
+/*--------------전역변수---------------------*/
+
 function enterKey() {
 	if(window.event.keyCode == 13) {
 		search();
 	}
 }//검색하고 엔터치면 검색기능과 같은 효과
+
+/*----장소 검색 창 관련 --------*/
 function search() {
 	console.log('search');
 	initSearch();
@@ -132,14 +144,19 @@ function initSearch() {
   }
 	markers= [];
 	$('#search-result-wrapper').empty();
+	if(!$('#review-list-wrapper').hasClass('shrink')){
+		shrinkToggle('review-list-wrapper');
+  	}
 	
-}
+}//검색버튼 누를시 검색결과 초기화
+
+
 function showResult(points) {
 	points.forEach((el,i) => {
 		$(`<div id="search-result_${i}" class="search-result row">
-		<div style="cursor:pointer;padding:15px;" class="col-10" >lat : ${el.lat} lng : ${el.lng}</div>
+		<div style="cursor:pointer;padding:15px;" class="col-10" >${el.name}</div>
 			<div class="col-2">
-				<button class="btn btn-secondary search-result-btn" onclick="loadReview()">
+				<button class="btn btn-secondary search-result-btn" onclick="return loadReview()">
 					<i class="fa fa-angle-right"></i>
 				</button>
 			</div>`)
@@ -165,7 +182,15 @@ function disableHighlight(id) {
 		selected.classList.remove('highlight');
 	}
 }
+
+function deletePoint(){
+	//내가 추가한 장소라면 삭제
+}
+/*-----review탭 관련-------*/
+
+
 function loadReview() {
+	event.stopPropagation();
 	$('#review-list').empty();
 	shrinkToggle('review-list-wrapper');
 	reviews.forEach((el,i) => {
@@ -180,7 +205,7 @@ function loadReview() {
                 ${el.content}
             </div>
             <div class="more">
-                <span class="more-span">
+                <span class="more-span" onclick="toggleReviewDetail(true);">
                     more >
                 </span>
             </div>
@@ -191,10 +216,46 @@ function loadReview() {
 			google.maps.event.trigger(markers[i], 'click');
 		});
 			
-	});	
+	});
+	return false;
 }
 
-/*위치 찍기 관련 함수들*/
+function toggleReviewForm(flag) {
+	if(flag) {
+		$('#review-form').load('review_form.do');
+		$('#review-form').css('display','block');
+		$('#review-detail').css('display','none');
+	}
+	else {
+		$('#review-form').css('display','none');
+	}
+	
+}
+function toggleReviewDetail(flag) {
+	if(flag) {
+		$('#review-detail').load('review_detail.do');
+		$('#review-detail').css('display','block');
+		$('#review-form').css('display','none');
+	}
+	else {
+		$('#review-detail').css('display','none');
+	}
+	
+}
+function loadDetailForm() {
+	$('#review-detail').load('review_detail.do');
+}//(more >) 버튼 눌렀을 때
+
+function sendReviewForm() {
+	//ajax;
+}// 리뷰 쓰기 눌렀을 때
+
+
+function writeButtonClick() {
+	
+}//새로운 리뷰 등록
+
+/*위치 추가 모드 관련*/
 function createNewPointModeButton(controlDiv) {
 	  const controlUI = document.createElement("div");
 
@@ -236,57 +297,71 @@ function createNewPointModeButton(controlDiv) {
   $(okButton).addClass('btn btn-success');
   cancelOkButton.appendChild(okButton);
   
-  var marker = {value:null};
-  defaultButton.addEventListener("click", (e) => {toggleNewPointMode(true,marker,defaultButton,cancelOkButton,okButton);});
-  cancelButton.addEventListener("click", (e) => {toggleNewPointMode(false,marker,defaultButton,cancelOkButton,okButton);});
-  okButton.addEventListener("click",(e) => {popUpConfirm(marker);});
+  var markerWrapper = {marker:null};
+  defaultButton.addEventListener("click", (e) => {toggleNewPointMode(true,markerWrapper,defaultButton,cancelOkButton,okButton);});
+  cancelButton.addEventListener("click", (e) => {toggleNewPointMode(false,markerWrapper,defaultButton,cancelOkButton,okButton);});
+  okButton.addEventListener("click",(e) => {showNewPointPrompt(markerWrapper,defaultButton,cancelOkButton,okButton);});
   map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(controlDiv);
-}
+} //장소 추가 버튼과 리스너 등록
 
 
-function toggleNewPointMode(flag,marker, defaultButton,cancelOkButton,okButton) {
+function toggleNewPointMode(flag,markerWrapper, defaultButton,cancelOkButton,okButton) {
 	if(flag) {
 		initSearch(); // 지도에 찍힌 핑 초기화
+		$('#shirinkable-layout').css('display','none');
 		map.setOptions({draggableCursor:'crosshair'}); // 커서 크로스헤어로 변경
 		google.maps.event.clearInstanceListeners(map);// map 클릭이벤트 초기화
-		map.addListener("click",(e) => {newPointModeMapClickListener(e,marker,okButton)});//위치 추가모드 맵 클릭리스너 추가
+		map.addListener("click",(e) => {newPointModeMapClickListener(e,markerWrapper,okButton)});//위치 추가모드 맵 클릭리스너 추가
 		defaultButton.style.display = 'none'; // 기본버튼 안보이게
 		cancelOkButton.style.display = 'block'; // 확인 취소 버튼 보이게
 	} else {
 		map.setOptions({draggableCursor:''});
+		$('#shirinkable-layout').css('display','block');
 		defaultButton.style.display = 'block';//기본 버튼 보이게
 		cancelOkButton.style.display = 'none';//확인 취소 버튼 안보이게
-		okButton.setAttribute('disabled','true');//확인버튼 비활성화
+		okButton.disabled = true;//확인버튼 비활성화
 		google.maps.event.clearInstanceListeners(map);// map 클릭이벤트 초기화
 		map.addListener("click",defaultMapClickListener);//기본 맵 클릭 리스너
-		if(marker.value !== null) {
-		console.log(marker);
-		marker.value.setMap(null);
+		if(markerWrapper.marker !== null) {
+		console.log(markerWrapper);
+		markerWrapper.marker.setMap(null);
 		}
 	}
 }
 
-function newPointModeMapClickListener(event,marker,okButton) {
-	if(marker.value !== null) {
-		console.log(marker);
-		marker.value.setMap(null);
+function newPointModeMapClickListener(event,markerWrapper,okButton) {
+	if(markerWrapper.marker !== null) {
+		console.log(markerWrapper);
+		markerWrapper.marker.setMap(null);
 	}
-	marker.value = new google.maps.Marker({
+	markerWrapper.marker = new google.maps.Marker({
 			position: event.latLng,
 			map,
 			optimized: false,
 			draggable: true,
 		});
-	okButton.setAttribute('disabled','false');
+	okButton.disabled = false;
 }
-function popUpConfirm(marker) {
-	var juso = marker.value.getPosition();
-	var result = confirm(juso); 
+
+
+function showNewPointPrompt(markerWrapper,defaultButton,cancelOkButton,okButton) {
+	var result = prompt('이 장소의 이름을 입력해 주세요',''); 
+	console.log(markerWrapper.marker.getPosition());
 	if(result) { 
-		
-	} else {
-		
+		var result2 = prompt('','');
+		if(result2 || result2 === '') {
+			if(result2 === '') {
+				console.log("안적음");
+			} else {
+				console.log("적음");
+			}
+			//ajax로 db에 장소 등록 필요
+			points.length = 0;
+			points.push({position: {lat : markerWrapper.marker.getPosition().lat(), lng : markerWrapper.marker.getPosition().lng()},
+				name:result,id:null});
+			//id에 null대신 db의 id 받아오기
+			toggleNewPointMode(false,markerWrapper,defaultButton,cancelOkButton,okButton);
+			search();
+		}		
 	}
 }
-
-
