@@ -18,4 +18,14 @@ public class MainController {
 		model.addAttribute("menu", menu);
 		return "start";
 	}
+	
+	@RequestMapping("/login.action")
+	public String loginRequest() {
+		return "account/login";
+	}
+	
+	@RequestMapping("/register.action")
+	public String registerRequest() {
+		return "account/register";
+	}
 }
