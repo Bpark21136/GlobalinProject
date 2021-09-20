@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- icon script -->
     <script src="https://kit.fontawesome.com/99f7873797.js" crossorigin="anonymous"></script>
-    <script src="<c:url value="/resources/static/js/menu3_main.js"/>"></script>
+    <%-- <script src="<c:url value="/resources/static/js/menu3_main.js"/>"></script> --%>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
@@ -37,10 +37,6 @@
                         <p>
                             먼저, 회원가입을 하시고 로그인을 하세요. 그리고 게시판 탭으로 들어가서 글쓰기 버튼을 누르세요.
                             마지막으로 제목과 글을 작성하신 후에 작성하기 버튼을 누르시면 됩니다.
-                        </p>
-                        <p>
-                            まず、会員登録をしてログインしてください。そして、掲示板タブに入って、ライティングボタンを押してください。
-                            最後に、タイトルと文章を作成した後に作成ボタンを押します。
                         </p>
                     </div>
                 </div>
@@ -101,7 +97,7 @@
         </div>
         
         <!-- contact -->
-        <div class="contact">
+        <!-- <div class="contact">
             <div class="wrapper">
                 <header>Send us a Message</header>
                 <form action="#">
@@ -140,7 +136,7 @@
                     </div>
                 </form>
             </div>
-        </div>
+        </div> -->
     </section>
     </div>
 </body>
