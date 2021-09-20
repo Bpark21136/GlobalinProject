@@ -21,7 +21,7 @@ const points = [{position:{lat : 37.566668,lng: 126.978416}, name:'서울시청'
 	{position:{lat :36.320541,lng: 131.806041}, name:'바다',id:'3'},
 	{position:{lat :35.845552,lng: 134.094556}, name:'바다',id:'4'},
 	{position:{lat : 35.130716816459135,lng: 132.60117561767552}, name:'sambe rest Area',id:'5'}];
-const reviews= [{title : "리뷰1", content: "내용1",author: "작성자1",country : "korea"},{title : "리뷰2", content: "내용2",author: "작성자2",country : "japan"}]
+const reviews= [{title : "리뷰1", content: "내용1",author: "작성자1",country : "korea",pointID:'1',reviewID:'1'},{title : "리뷰2", content: "내용2",author: "작성자2",country : "japan"}];
 var markers = new Array();
 	
 var selectedMarker = null;//현재 선택된 마커(점프뛰고 있는놈)
@@ -349,20 +349,11 @@ function showNewPointPrompt(markerWrapper,defaultButton,cancelOkButton,okButton)
 	var result = prompt('이 장소의 이름을 입력해 주세요',''); 
 	console.log(markerWrapper.marker.getPosition());
 	if(result) { 
-		var result2 = prompt('','');
-		if(result2 || result2 === '') {
-			if(result2 === '') {
-				console.log("안적음");
-			} else {
-				console.log("적음");
-			}
-			//ajax로 db에 장소 등록 필요
-			points.length = 0;
-			points.push({position: {lat : markerWrapper.marker.getPosition().lat(), lng : markerWrapper.marker.getPosition().lng()},
-				name:result,id:null});
-			//id에 null대신 db의 id 받아오기
-			toggleNewPointMode(false,markerWrapper,defaultButton,cancelOkButton,okButton);
-			search();
-		}		
+		points.length = 0;
+		points.push({position: {lat : markerWrapper.marker.getPosition().lat(), lng : markerWrapper.marker.getPosition().lng()},
+			name:result,id:null});
+		//id에 null대신 db의 id 받아오기
+		toggleNewPointMode(false,markerWrapper,defaultButton,cancelOkButton,okButton);
+		search();	
 	}
 }

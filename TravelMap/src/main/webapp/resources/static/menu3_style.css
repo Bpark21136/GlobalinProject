@@ -11,6 +11,7 @@
   --gray-dark-color: #909090;
   --gray-light-color: #e0e0e0;
 }
+
 *,
 *::before,
 *::after {
@@ -116,7 +117,7 @@ section.faq {
 
 /* contact us */
 
-.contact {
+/* .contact {
   box-sizing: border-box;
   display: flex;
   padding: 0 10px;
@@ -250,5 +251,4 @@ form .button-area {
     text-align: center;
     padding-top: 15px;
     margin-right: 20px 0;
-  }
-}
+  } */
