@@ -158,16 +158,16 @@ var checkEmail = function( email ){
             </div>
           </div>
         </div>
-        <!-- 국적 부분  개선 필요-->
-        <div class="input-group mb-3">
-          <input type="text" class="form-control"  id="country" name="country" placeholder="국적">
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-lock"></span>
-            </div>
-          </div>
-        </div>
+        
+        <label for="country">Country</label><span style="color: red !important; display: inline; float: none;">*</span>      
+        
+        <select id="country" name="country" class="form-control">
+            <option value="Others">Others</option>
+            <option value="Japan">Japan</option>
+            <option value="Korea, Republic of">Korea, Republic of</option>
+        </select>
 
+        <br />
         <div class="row">
           <div class="col-8">
 			<div style="align-self: left;">
