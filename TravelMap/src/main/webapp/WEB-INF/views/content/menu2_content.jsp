@@ -11,20 +11,9 @@
        
        
         #onehead{text-align: center; color: white;}
-<<<<<<< HEAD
         #mypage{display:flex; justify-content:center; padding-top: 150px; background-color:   #534bae;}
-=======
-        #mypage{ padding-top: 150px; background-color:#534bae;}
->>>>>>> branch 'main' of https://github.com/Bpark21136/GlobalinProject.git
         .lg{text-align: center; background-color: #1a237e; ; height: 50px; border-radius: 20px;}
-<<<<<<< HEAD
-        .div1{margin-bottom: 10px; background-color: white;}
-        .old *{margin-bottom: 10px}
-        
-        
-=======
         .div1 {margin-bottom: 10px; background-color: white;}
->>>>>>> branch 'main' of https://github.com/Bpark21136/GlobalinProject.git
     </style>
     
 </head>
@@ -33,7 +22,6 @@
     <div class="container">
     <div class="div1" style= "border: solid 0px; width: 500px; height: 300px; border-radius: 20px;">
         <fieldset style="border: 0cm;">
-<<<<<<< HEAD
 <header id="onehead">
 <div class="text-area">
     <legend class="lg"> <h1>MyPage</h1></legend>
@@ -55,25 +43,6 @@
 </ol>
 </fieldset>
 </div>
-=======
-			<header id="onehead">
-				<div class="text-area">
-    				<legend class="lg"> <h1>MyPage</h1></legend>
-				</div>
-				<hr>
-			</header>
-			<ol>
-			    <div class="id">ID : </div>
-			    <div class="pwd">PWD : </div>
-			    <div class="name"> 이름 : </div>
-			    <div class="국적">국적 : </div>
-				<button href="Change.html"><input type="button" value="회원정보 수정" onclick="" class="btn"></button>
-				<button href="MyGyeshigle.html"><input type="button" value="내 게시글" onclick="" class="btn"></button>
-			</ol>
-		</fieldset>
-		</div>
-	</div>
->>>>>>> branch 'main' of https://github.com/Bpark21136/GlobalinProject.git
 </div>
 </body>
 </html>
