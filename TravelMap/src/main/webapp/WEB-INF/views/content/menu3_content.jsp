@@ -18,7 +18,7 @@
     <title>Home</title>
 </head>
 <body>
-	<div class="menu3">
+	<div class="faqMenu3">
 	<!-- faq -->
     <section class="faq">
         <div class="title">
