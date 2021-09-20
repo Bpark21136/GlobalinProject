@@ -9,11 +9,11 @@
 
     <div id="map"></div>
 
-	<div id="review-detail"style="position:absolute;padding-left:420px;padding-top:70px;height:100%;width:100%;top:0px;left:0px;display:none">
+	<div id="review-detail"style="position:absolute;padding-left:420px;padding-top:70px;padding-bottom:70px;width:100%;min-height:100%;top:0px;left:0px;background-color:white;display:none">
 	</div>
 	<%--리뷰 자세히 보기(ajax) --%>
 	
-	<div id="review-form"style="position:absolute;padding-left:420px;padding-top:70px;height:100%;width:100%;top:0px;left:0px;display:none">
+	<div id="review-form"style="position:absolute;padding-left:420px;padding-top:70px;padding-bottom:70px;width:100%;min-height:100%;top:0px;left:0px;background-color:white;display:none">
 	</div>
 	<%--리뷰 작성 폼(ajax)--%>
 	

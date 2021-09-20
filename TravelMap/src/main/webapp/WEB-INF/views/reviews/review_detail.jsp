@@ -32,6 +32,9 @@
 .comment-hr {
 	border-top: 1px solid #17a2b8;
 }
+.background-white{
+	background-color:white;
+}
 </style>
 
 </head>
@@ -40,7 +43,7 @@
 		<i class="fa fa-window-close fa-fw fa-2x" aria-hidden="true"></i>
 	</div>
 	<article>
-		<div class="container">
+		<div class="container background-white">
 			<header>
 				<div class="header-wrapper">
 					<h3 class="title ub-word">
