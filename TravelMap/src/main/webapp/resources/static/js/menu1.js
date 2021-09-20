@@ -366,4 +366,3 @@ function showNewPointPrompt(markerWrapper,defaultButton,cancelOkButton,okButton)
 		}		
 	}
 }
->>>>>>> branch 'main' of https://github.com/Bpark21136/GlobalinProject.git

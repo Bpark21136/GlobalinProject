@@ -8,37 +8,6 @@
 <head>
  	<link rel="stylesheet" href="<c:url value="/resources/static/libs/bootstrap-4.4.1-dist/css/bootstrap.min.css"/>">
  	<script src="<c:url value="/resources/static/libs/jquery-3.6.0.min.js"/>"></script>
-<<<<<<< HEAD
-	<script src="<c:url value="/resources/static/libs/bootstrap-4.4.1-dist/js/bootstrap.min.js"/>"></script>
-	<%--bootstrap import --%>
-	<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-	<%--googleMap import--%>
-	<link rel="stylesheet" href="<c:url value="/resources/static/sidebar.css"/>">
-	<link rel="stylesheet" href="<c:url value="/resources/static/shrinkable_layout.css"/>">
-	<link rel="stylesheet" href="<c:url value="/resources/static/libs/font-awesome-4.7.0/css/font-awesome.css"/>">
-	<title>Home</title>
-</head>
-<body>
-<!-- Navigation -->
-		
-	<div id="page-wrapper">
-  <!-- 메뉴버튼 -->
-	  <div id="sidebar-wrapper">
-	    <ul class="sidebar-nav">
-	      <li class="sidebar-brand">
-	        <a href="#">Ex</a>
-	      </li>
-	      <li><a class="<%=menu ==  1 ?  "sel" : "" %>" onclick="menuClick(this.id)" id="menu1" >
-	      		<img src="<c:url value="/resources/static/img/sidebar_menu1.png"/>">
-	      		</a>
-	      		</li>
-	      <li><a class="<%=menu ==  2 ?  "sel" : "" %>" onclick="menuClick(this.id)" id="menu2" >
-	      		<img src="<c:url value="/resources/static/img/sidebar_menu2.png"/>">
-	      		</a>
-	      <li><a class="<%=menu ==  3 ?  "sel" : "" %>" onclick="menuClick(this.id)" id="menu3" >
-	      		<img src="<c:url value="/resources/static/img/sidebar_menu3.png"/>">
-	      		</a>
-=======
  	<!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> -->
 	<script src="<c:url value="/resources/static/libs/bootstrap-4.4.1-dist/js/bootstrap.min.js"/>"></script>
 	<%--bootstrap import --%>
@@ -84,7 +53,6 @@
 			}
 			</script>
 			<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
->>>>>>> branch 'main' of https://github.com/Bpark21136/GlobalinProject.git
 	    </ul>
 	  </div>
 	  <!-- 사이드바 -->
