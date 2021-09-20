@@ -8,6 +8,7 @@
 <head>
  	<link rel="stylesheet" href="<c:url value="/resources/static/libs/bootstrap-4.4.1-dist/css/bootstrap.min.css"/>">
  	<script src="<c:url value="/resources/static/libs/jquery-3.6.0.min.js"/>"></script>
+<<<<<<< HEAD
 	<script src="<c:url value="/resources/static/libs/bootstrap-4.4.1-dist/js/bootstrap.min.js"/>"></script>
 	<%--bootstrap import --%>
 	<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
@@ -37,6 +38,53 @@
 	      <li><a class="<%=menu ==  3 ?  "sel" : "" %>" onclick="menuClick(this.id)" id="menu3" >
 	      		<img src="<c:url value="/resources/static/img/sidebar_menu3.png"/>">
 	      		</a>
+=======
+ 	<!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> -->
+	<script src="<c:url value="/resources/static/libs/bootstrap-4.4.1-dist/js/bootstrap.min.js"/>"></script>
+	<%--bootstrap import --%>
+	<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+	<%--googleMap import--%>
+	<link rel="stylesheet" href="<c:url value="/resources/static/sidebar.css"/>">
+	<link rel="stylesheet" href="<c:url value="/resources/static/shrinkable_layout.css"/>">
+	
+	<link rel="stylesheet" href="<c:url value="/resources/static/libs/font-awesome-4.7.0/css/font-awesome.css"/>">
+	<%--fontawesome import --%>
+	
+	<link rel="stylesheet" href="<c:url value="/resources/static/libs/summernote-0.8.18-dist/summernote-lite.css"/>">
+	<script src="<c:url value="/resources/static/libs/summernote-0.8.18-dist/summernote-lite.js"/>"></script>
+    <%--summernote import--%>
+	<title>Home</title>
+</head>
+<body>
+<!-- Navigation -->
+		
+	<div id="page-wrapper">
+  <!-- 메뉴버튼 -->
+	  <div id="sidebar-wrapper">
+	    <ul class="sidebar-nav">
+	      <li class="sidebar-brand">
+	        <a href="#">Ex</a>
+	      </li>
+	      <li><a class="<%=menu ==  1 ?  "sel" : "" %>" onclick="menuClick(this.id)" id="menu1" >
+	      		<img src="<c:url value="/resources/static/img/sidebar_menu1.png"/>">
+	      		</a>
+	      		</li>
+	      <li><a class="<%=menu ==  2 ?  "sel" : "" %>" onclick="menuClick(this.id)" id="menu2" >
+	      		<img src="<c:url value="/resources/static/img/sidebar_menu2.png"/>">
+	      		</a>
+	      <li><a class="<%=menu ==  3 ?  "sel" : "" %>" onclick="menuClick(this.id)" id="menu3" >
+	      		<img src="<c:url value="/resources/static/img/sidebar_menu3.png"/>">
+	      		</a>
+          <li><button type="button" onclick="location.href='./login.action'" class="btn btn-secondary" id="btn" >로그인</button>
+          <li><br/>
+          <li><div id="google_translate_element"></div>
+			<script type="text/javascript">
+			function googleTranslateElementInit() {
+			  new google.translate.TranslateElement({pageLanguage: 'ko'}, 'google_translate_element');
+			}
+			</script>
+			<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+>>>>>>> branch 'main' of https://github.com/Bpark21136/GlobalinProject.git
 	    </ul>
 	  </div>
 	  <!-- 사이드바 -->
