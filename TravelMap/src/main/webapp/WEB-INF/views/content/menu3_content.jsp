@@ -29,7 +29,7 @@
                 
                 <div class="accordion-item" id="question1">
                     <a class="accordion-link" href="#question1">
-                        게시판은 어떻게 이용하나요? 掲示板はどうして使用しますか？
+                        게시판은 어떻게 이용하나요?
                         <i class="fas fa-plus"></i>
                         <i class="fas fa-minus"></i>
                     </a>
