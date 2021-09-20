@@ -12,13 +12,13 @@
   --gray-light-color: #e0e0e0;
 }
 
-*,
+/* *,
 *::before,
 *::after {
   margin: 0;
   padding: 0;
   box-sizing: inherit;
-}
+} */
 
 /* faq */
 div.faqMenu3 {
@@ -36,6 +36,7 @@ section.faq {
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: var(--back-color);
 }
 
 .title {
@@ -49,6 +50,7 @@ section.faq {
   max-width: 80rem;
   margin: 0 auto;
   padding: 0 1.5rem;
+  background-color: var(--back-color)
 }
 
 .accordion-item {
