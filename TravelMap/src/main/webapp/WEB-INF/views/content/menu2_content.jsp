@@ -11,16 +11,17 @@
        
        
         #onehead{text-align: center; color: white;}
-        #mypage{display:flex; justify-content:center; padding-top: 150px; background-color:   #534bae;}
+        #mypage{display:flex; justify-content:center; padding-top: 150px; background-color:   #534bae;height:100%;}
+        .align-center{display:flex; justify-content:center;}
         .lg{text-align: center; background-color: #1a237e; ; height: 50px; border-radius: 20px;}
-        .div1{display:flex; justify-content:center; margin-bottom: 10px; background-color: white;}
+        .div1{background-color:white;}
         .old *{margin-bottom: 10px}
     </style>
     
 </head>
 <body>
     <div id="mypage">
-	    <div class="container">
+	    <div class="container align-center">
 		    <div class="div1" style= "border: solid 0px; width: 500px; height: 300px; border-radius: 20px;">
 		        <fieldset style="border: 0cm;">
 					<header id="onehead">
