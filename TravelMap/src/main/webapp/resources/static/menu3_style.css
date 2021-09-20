@@ -124,6 +124,7 @@ section.faq {
   min-height: 80vh;
   align-items: center;
   justify-content: center;
+  background-color: var(--back-color);
 }
 
 .wrapper {
