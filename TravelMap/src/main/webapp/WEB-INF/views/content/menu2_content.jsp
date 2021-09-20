@@ -9,10 +9,12 @@
     <title>MyPage</title>
     <style>
        
+       
         #onehead{text-align: center; color: white;}
-        #mypage{ padding-top: 150px; background-color:   #534bae;}
+        #mypage{display:flex; justify-content:center; padding-top: 150px; background-color:   #534bae;}
         .lg{text-align: center; background-color: #1a237e; ; height: 50px; border-radius: 20px;}
-        div{margin-bottom: 10px; background-color: white;}
+        .div1{margin-bottom: 10px; background-color: white;}
+        .old *{margin-bottom: 10px}
         
         
     </style>
@@ -31,15 +33,15 @@
 <hr>
 </header>
 
-<ol>
+<ol class="old">
     <div class="id">ID : </div>
     <div class="pwd">PWD : </div>
     <div class="name"> 이름 : </div>
     <div class="국적">국적 : </div>
 
 
-<a href="Change.html"><input type="button" value="회원정보 수정" onclick="" class="btn"></a>
-<a href="MyGyeshigle.html"><input type="button" value="내 게시글" onclick="" class="btn"></a>
+<button href="Change.html">회원정보 수정</button>
+<button href="MyGyeshigle.html">내 게시글</button>
 </ol>
 </fieldset>
 </div>
