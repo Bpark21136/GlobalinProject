@@ -18,6 +18,7 @@
     <title>Home</title>
 </head>
 <body>
+	<div class="menu3">
 	<!-- faq -->
     <section class="faq">
         <div class="title">
@@ -141,5 +142,6 @@
             </div>
         </div>
     </section>
+    </div>
 </body>
 </html>
