@@ -70,12 +70,21 @@
 	<script type="text/javascript">
 		var menu = <%=menu%>;
 		loadMenu('menu' + menu);
+		console.log('menu',menu);
 		window.onpopstate = function(event) {
 			const url = new URL(window.location.href);
 			console.log('popstate',url);
 			const urlParams = url.searchParams;
 			console.log('popstate',urlParams);
-			if(urlParams.get('menu') == undefined) {
+			console.log('popstate',menu,' ',urlParams.get('menu'));
+			if(urlParams.get('menu') == undefined && menu == 1) {
+				return;
+			}
+			else if(menu == urlParams.get('menu')) {
+				console.log('menu == urlParams.get(menu)');
+				return;
+			}
+			else if(urlParams.get('menu') == undefined) {
 				menu = 1;
 			}
 			else {
@@ -85,8 +94,15 @@
 	        loadMenu('menu' + menu);
 	      };
 		function menuClick(id) {
-			console.log('menu click');
-			const id_val = id.slice(4);
+			const id_val = parseInt(id.slice(4));
+			console.log('menu click',menu,id_val);
+			if(menu == id_val) {
+				console.log('menu == id_val');
+				return;
+			}
+			
+			menu = id_val;
+			
 			changeSel(id);
 			history.pushState('','', '?menu=' + id_val);
 		    loadMenu(id);
@@ -101,8 +117,15 @@
 				document.getElementById(id).classList.toggle('sel');
 		}
 		function loadMenu(id) {
+			console.log(id.slice(4));
 			$('#sidebar-content-wrapper').load('content.do?id=' + id);
 			$('#page-content-wrapper').load('sidebar.do?id=' + id);
+			
+			if(id.slice(4) != 1) { // 사이드 바 안쓰는 경우
+				$('#shirinkable-layout').css("display","none");
+			} else {
+				$('#shirinkable-layout').css("display","block");
+			}
 		}
 		
 		function shrinkToggle(id){
