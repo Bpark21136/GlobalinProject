@@ -1,16 +1,5 @@
 /* @import url("https://fonts.googleapis.com/csss2?famliy=Roboto"); */
-:root {
-  /* color */
-  --white-color: #ffffff;
-  --back-color: #534bae;
-  --faq-con-color: #1a237e;
-  --shadow-color: #000051;
-  --faq-button-color: #e8e7f4;
-  --answer-back-color: #1e105d;
-  --answer-bar-color: #f9a825;
-  --gray-dark-color: #909090;
-  --gray-light-color: #e0e0e0;
-}
+
 
 /* *,
 *::before,
