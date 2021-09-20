@@ -13,7 +13,7 @@
         #onehead{text-align: center; color: white;}
         #mypage{display:flex; justify-content:center; padding-top: 150px; background-color:   #534bae;}
         .lg{text-align: center; background-color: #1a237e; ; height: 50px; border-radius: 20px;}
-        .div1{margin-bottom: 10px; background-color: white;}
+        .div1{display:flex; justify-content:center; margin-bottom: 10px; background-color: white;}
         .old *{margin-bottom: 10px}
     </style>
     
