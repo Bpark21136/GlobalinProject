@@ -52,11 +52,6 @@
 	      		</a>
 	      		</li>
           <li>
-          <li><a class="<%=menu ==  5 ?  "sel" : "" %>" onclick="menuClick(this.id)" id="menu5" >
-	      		<img src="<c:url value="/resources/static/img/sidebar_menu3.png"/>">
-	      		</a>
-	      		</li>
-          <li>
           <button type="button" onclick="location.href='./login.action'" class="btn btn-secondary" id="btn" >로그인</button></li>
           <li><br/><div id="google_translate_element"></div>
 			<script type="text/javascript">
