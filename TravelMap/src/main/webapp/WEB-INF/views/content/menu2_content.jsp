@@ -12,7 +12,7 @@
 <style>
 	.container .bbs {padding-top: 100px; font-family: "Roboto", sans-serif;}
 	.container .bbs .header {display: flex; justify-content: center;}
-	.container .bbs .header .bTitle{width: 300px; border-radius: 20px; text-align: center; font-size: 32px; color: var(--white-color); background-color: var(--faq-con-color);}
+	.container .bbs .header .bTitle{width: 300px; border-radius: 20px; text-align: center; font-size: 40px; color: var(--white-color); background-color: var(--faq-con-color);}
 	.container .bbs .bbsSearch .form-control.bbsSearch{margin: 0; display:inline; margin-top: 30px;margin-bottom: 5px;width: 200px;}
 	.container .bbs .bbsSearch .input-group-append{display:inline;}
 	.container .bbs .bbsSearch .input-group-append .btn.bbsBtn-outline-secondary{background-color: var(--faq-con-color);}

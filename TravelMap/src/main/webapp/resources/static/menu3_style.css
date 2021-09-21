@@ -35,6 +35,7 @@ section.faq {
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 40px;
   width: 300px;
   padding-bottom: 5px;
   border-radius: 20px;
