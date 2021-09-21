@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.travel.mapper.PointMapper">
+	<!--장소 insert하고 ID가져오기  -->
+	<insert id="insertPoint" parameterType="com.web.travel.dto.PointDTO" useGeneratedKeys="true" keyProperty="pointID">
+		insert into point (
+			name, 
+			lat, 
+			lng, 
+			userID
+		) 
+		values (
+			#{name}, 
+			#{lat}, 
+			#{lng}, 
+			#{userID}
+		)
+	</insert>
+	<select id="searchPoint" resultType="com.web.travel.dto.PointDTO">
+		SELECT *
+		FROM POINT WHERE NAME like CONCAT('%',#{query},'%')
+		ORDER BY POINTID DESC LIMIT #{page}, 10
+	</select>
+	
+	<select id="getMaxPage" resultType="int">
+		SELECT CEILING(COUNT(*)/10) FROM POINT WHERE NAME like CONCAT('%',#{query},'%')
+	</select>
+</mapper>

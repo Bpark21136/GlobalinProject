@@ -50,8 +50,8 @@
     transform: translateY(-50%);
   }
   #search-result-wrapper {
-  	height:calc(100% - 45px);
-  	overflow-y:auto; 
+  	height:calc(100% - 70px);
+  	overflow-y:overlay; 
   	
   }
   #review-list-wrapper {
@@ -68,8 +68,8 @@
     z-index:2;
   }
   #review-list {
-  	height:calc(100% - 30px);
-  	overflow-y:auto; 
+  	height:calc(100% - 70px);
+  	overflow-y:overlay; 
   }
   .review-div {
     border-color: aqua;

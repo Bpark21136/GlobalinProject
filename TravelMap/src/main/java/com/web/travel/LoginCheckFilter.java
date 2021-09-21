@@ -11,8 +11,11 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-public class LoginCheckFilter implements Filter {
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+public class LoginCheckFilter implements Filter {
+	private static final Logger logger = LoggerFactory.getLogger(LoginCheckFilter.class);
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 		// TODO Auto-generated method stub
@@ -25,10 +28,11 @@ public class LoginCheckFilter implements Filter {
 		// TODO Auto-generated method stub
 		HttpServletRequest httpRequest = (HttpServletRequest)request;
 		HttpSession session = httpRequest.getSession(false);
-
+		logger.info("loginCheck");
 		boolean login = false;
 		if(session != null) {
 			if(session.getAttribute("userId") != null) {
+				logger.debug((String) session.getAttribute("userId"));
 				login = true;
 			}
 		}

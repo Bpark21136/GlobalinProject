@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.travel.mapper.AccountMapper">
+
+	<!-- 로그인 확인 sql문 -->
+	<select id="loginSelect" parameterType="com.web.travel.dto.accountDTO" resultType="com.web.travel.dto.accountDTO">
+		select userid from user where userid=#{userId} and hashed_password=#{hashedPassword}
+	</select>
+	
+	<!-- 회원가입 시 회원 정보 입력 sql문 -->
+	<insert id="signUpInsert" parameterType="com.web.travel.dto.accountDTO">
+		insert into user (
+			userid, 
+			email, 
+			hashed_password, 
+			country
+		) 
+		values (
+			#{userId}, 
+			#{email}, 
+			#{hashedPassword}, 
+			#{country}
+		)
+	</insert>
+	
+	<!-- 아이디 중복 검사 sql문 -->
+	<select id="duIdSelect" parameterType="com.web.travel.dto.accountDTO" resultType="com.web.travel.dto.accountDTO">
+		select userid from user where userid=#{userId}
+	</select>
+	
+	<!-- 이메일 중복 검사 sql문 -->
+	<select id="duEmailSelect" parameterType="com.web.travel.dto.accountDTO" resultType="com.web.travel.dto.accountDTO">
+		select email from user where email=#{email}
+	</select>
+	
+</mapper>

@@ -53,20 +53,16 @@
 	      		</a>
 	      		</li>
           <li>
-<<<<<<< HEAD
           <li><a class="<%=menu ==  5 ?  "sel" : "" %>" onclick="menuClick(this.id)" id="menu5" >
 	      		<img src="<c:url value="/resources/static/img/sidebar_menu3.png"/>">
 	      		</a>
 	      		</li>
           <li>
-          <button type="button" onclick="location.href='./login.action'" class="btn btn-secondary" id="btn" >로그인</button></li>
-=======
           <%if(request.getAttribute("userId") == null) { %>
           	<button type="button" onclick="location.href='./login.action'" class="btn btn-secondary" id="btn" >로그인</button></li>
           <%} else if(request.getAttribute("userId") != null) {%>
           	<button type="button" onclick="location.href='./logout.action'" class="btn btn-secondary" id="btn" >로그아웃</button></li>
           <%} %>
->>>>>>> branch 'main' of https://github.com/Bpark21136/GlobalinProject.git
           <li><br/><div id="google_translate_element"></div>
 			<script type="text/javascript">
 			function googleTranslateElementInit() {
@@ -90,6 +86,9 @@
 	</div>
 		<!-- /.container -->
 	<script type="text/javascript">
+		var logined = <%=(String)request.getAttribute("userId") != null  ? "true" : "false" %>;
+		var uid = '<%=(String)request.getAttribute("userId")%>';
+		console.log(uid);
 		var menu = <%=menu%>;
 		loadMenu('menu' + menu);
 		console.log('menu',menu);

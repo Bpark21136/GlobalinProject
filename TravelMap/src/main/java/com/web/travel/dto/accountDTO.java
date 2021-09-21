@@ -1,4 +1,4 @@
-package accountDTO;
+package com.web.travel.dto;
 
 public class accountDTO {
 	private int seq;
