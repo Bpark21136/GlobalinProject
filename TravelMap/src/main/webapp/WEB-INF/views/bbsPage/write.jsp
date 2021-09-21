@@ -7,6 +7,6 @@
 <title></title>
 </head>
 <body>
-	bbspage
+	<p>bbspage
 </body>
 </html>
