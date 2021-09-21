@@ -22,7 +22,7 @@
 	<!-- faq -->
     <section class="faq">
         <div class="title">
-            <h1 class="faq-h1">FAQ</h1>
+            <header class="faq-h1">FAQ</header>
         </div>
         <div class="container">
             <div class="accordion">
