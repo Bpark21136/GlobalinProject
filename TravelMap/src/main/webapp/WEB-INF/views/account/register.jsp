@@ -38,7 +38,7 @@ $(document).ready(function() {
 	
 	$("#btn").button().on('click', function() {
 		//alert('click');
-		if( $('#id').val().trim() == "" ){
+		if( $('#userId').val().trim() == "" ){
 			alert('아이디 입력 오류입니다.');
 			return false;
 		}
@@ -47,7 +47,7 @@ $(document).ready(function() {
 			return false;
 		}
 		if( $('#password').val() != $('#password_ok').val() ){
-			alert('패스워드 입력 오류입니다.');
+			alert('패스워드를 정확히 입력 해주세요.');
 			return false;
 		}
 		if( $('#email').val().trim() == "" ){
@@ -85,7 +85,7 @@ var checkId = function( id ){
 		type: 'post',
 		datatype: 'json',
 		success: function( json ) {
-			if( json.flag == 1 ){
+			if( json.sqlOK == 1 ){
 				alert("이미 존재하는 ID입니다.");
 			} else {
 				alert('사용 가능한 ID입니다.');
@@ -104,7 +104,7 @@ var checkEmail = function( email ){
 		type: 'post',
 		datatype: 'json',
 		success: function( json ) {
-			if( json.flag == 1 ){
+			if( json.sqlOK == 1 ){
 				alert("이미 존재하는 email입니다.");
 			} else {
 				alert('사용 가능한 email입니다.');
@@ -127,7 +127,7 @@ var checkEmail = function( email ){
 
       <form id="form" name="form" action="./sign_up.action" method="post">
         <div class="input-group mb-3">
-          <input type="text" class="form-control" id="id" name="id" placeholder="아이디">
+          <input type="text" class="form-control" id="userId" name="userId" placeholder="아이디">
           <div class="input-group-append">
             <div class="input-group-text">
               <button type="button"  id="idBtn" style="width:60pt; height:18pt; padding: 0.1rem 0.1rem; font-size: 11.5pt;'">중복검사</button>
@@ -176,7 +176,7 @@ var checkEmail = function( email ){
           </div>
           <!-- /.col -->
           <div class="col-4">
-            <button type="button"  id="btn" >회원가입</button>
+            <button type="button" id="btn" >회원가입</button>
           </div>
           <!-- /.col -->
         </div>
