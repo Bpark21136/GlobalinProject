@@ -6,47 +6,92 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>MyGeshigle</title>
     <style>
-        #ch-head{text-align: center; color: white;}
-        #change{padding-top: 150px; background-color: #534bae;;}
-        .container.ch-center{display:flex; justify-content:center;}
-        .lg{text-align: center; background-color: #1a237e; ; height: 50px; border-radius: 20px;}
-        .div1{background-color:white;}
-        .ch-form *{margin-bottom: 10px;}
-        .ch-fixed-btn{background-color: var(--faq-con-color); color: var(--white-color);}
+    	.my-bbs-legend {display: flex; justify-content: center;} 
+    	.my-bbs-list .my-bbs-fd {margin: 150px;}
+        .line{width: 800px;height: 900px;margin-top: 22px; background-color:white}
+        .main{text-align: center; border: 1px;}
+        #my-bbs-list {display:flex; justify-content:center; background-color: var(--back-color);}
+        .tb{padding-top: 40px;}
+        .bbsListTitle{background-color: var(--faq-con-color);}
+		.bbsListTitle *{color: var(--white-color);}
+		.bbsListLine *{color: var(--white-color); text-decoration: none;}
+		.bbsListTbody {background-color: var(--answer-back-color);}
+		.my-bbs-fd .my-bbs-writeBtn .btn.my-bbs-writeBtn{background-color: var(--faq-con-color); color: var(--white-color);}
+        .container .row .table.table-striped{box-shadow: 0.5rem 4px 0.5rem var(--shadow-color);}/
+
     </style>
 </head>
 <body>
-	<div id="change">
-		<div class="container ch-center">
-			<div class="div1" style="border: solid 0 hidden; width: 500px; height: 430px; border-radius: 20px;">
-			    <fieldset style="border: 0ch;">
-					<header id="ch-head">
-						<div class="text-area">
-						   <legend class="lg"><h1>회원 정보 수정</h1></legend> 
+	<div id="my-bbs-list">
+		<div class="container my-bbs-list" style="background-color: #534bae;">
+			<fieldset class="my-bbs-fd">
+			    <div style="color: white;">
+					<legend class="my-bbs-legend">
+					    <div class="dc" style="border: solid 1px; width: 300px; height: auto; border-radius: 20px; background-color: #1a237e;
+					    margin-top: 10px; padding: 0;">
+					    	<h1 class="main">내 게시글</h1>
 						</div>
-					<hr>
-					</header>
-					<form action="" class="ch-form">
-						<ol class="ch-old">
-						    <div class="id">ID : </div>
-						    <div class="pwd1"><label for="now pwd"> 현재 PW : </label> <input  id="now pwd" type="password" name="pwd" required></div>
-						    <div class="pwd2"><label for="new pwd"> 새로운 PW : </label> <input id="new pwd" type="password" name="new pwd" required></div>
-						    <div class="pwd2"><label for="new pwd2"> PW 확인 : </label> <input id="new pwd2" type="password" name="new pwd2" required></div>
-						    <div class="name"> <label for="name">이름 : </label> <input id="name" type="text" name="name" required></div>
-						    <div class="국적">국적 : 
-							    <select>
-							        <option value="한국">한국</option>
-							        <option value="日本">日本</option>
-							    </select>
-						    </div>
-							<button class="ch-fixed-btn" href="MyPage.html">수정완료</button>
-						</ol>
-					</form>
-				</fieldset>
-			</div>
+					</legend>
+				</div>
+				
+				<table class="table table-striped" style="text-align: center; border: 0">
+					<thead class="bbsListThead">
+						<tr class="bbsListTitle">
+							<th class="listTNum" text-align: center;">번호</th>
+							<th class="listTTitle" text-align: center;">제목</th>
+							<th class="listTName" text-align: center;">작성자</th>
+							<th class="listTDate" text-align: center;">작성일</th>
+						</tr>
+					</thead>
+					<tbody class="bbsListTbody">
+						<tr class="bbsListLine">
+							<td class="listINum">1</td>
+							<td class="listITitle">
+							<a class="viewLink" href="bbsView.jsp">안녕하세요</a></td>
+							<td class="listIName">홍길동</td>
+							<td class="listIDate">2021-09-21</td>
+						</tr>
+						
+						<tr class="bbsListLine">
+							<td class="listINum">2</td>
+							<td class="listITitle">
+							<a class="viewLink" href="bbsView.jsp">안녕하세요</a></td>
+							<td class="listIName">홍길동</td>
+							<td class="listIDate">2021-09-21</td>
+						</tr>
+						
+						<tr class="bbsListLine">
+							<td class="listINum">3</td>
+							<td class="listITitle">
+							<a class="viewLink" href="bbsView.jsp">안녕하세요</a></td>
+							<td class="listIName">홍길동</td>
+							<td class="listIDate">2021-09-21</td>
+						</tr>
+					</tbody>
+				</table>
+				
+				<tr class="my-bbs-writeBtn">
+					<td class="td my-bbs-writeBtn" colspan="6" align="right"><button class="btn my-bbs-writeBtn">글쓰기</button></td>
+				</tr>
+				        
+				<tr class="my-bbs-page">
+				     <td class="my-bbs-pageNum" colspan="6">
+				        <a href="#">1</a> 
+				        <a href="#">2</a> 
+				        <a href="#">3</a> 
+				        <a href="#">4</a> 
+				        <a href="#">5</a> 
+				        <a href="#">6</a> 
+				    	<a href="#">7</a>
+					</td>
+				</tr>
+				
+				</div>
+			</fieldset>
 		</div>
 	</div>
+    
 </body>
 </html>
