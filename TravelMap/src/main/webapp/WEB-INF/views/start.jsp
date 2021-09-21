@@ -52,6 +52,7 @@
 	      		</a>
 	      		</li>
           <li>
+          
           <button type="button" onclick="location.href='./login.action'" class="btn btn-secondary" id="btn" >로그인</button></li>
           <li><br/><div id="google_translate_element"></div>
 			<script type="text/javascript">

@@ -35,6 +35,9 @@
 .background-white{
 	background-color:white;
 }
+.background-purple {
+	background-color:var(--back-color);
+}
 </style>
 
 </head>
@@ -43,7 +46,7 @@
 		<i class="fa fa-window-close fa-fw fa-2x" aria-hidden="true"></i>
 	</div>
 	<article>
-		<div class="container background-white">
+		<div class="container background-purple">
 			<header>
 				<div class="header-wrapper">
 					<h3 class="title ub-word">
