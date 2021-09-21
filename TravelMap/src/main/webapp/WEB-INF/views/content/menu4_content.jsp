@@ -16,6 +16,8 @@
         .lg{text-align: center; background-color: #1a237e; ; height: 50px; border-radius: 20px;}
         .div1{background-color:white;}
         .old *{margin-bottom: 10px}
+        .my-fixed-btn{background-color: var(--faq-con-color); color: var(--white-color);}
+        .my-bbs-btn{background-color: var(--faq-con-color); color: var(--white-color);}
     </style>
     
 </head>
@@ -35,13 +37,13 @@
 					
 					<ol class="old">
 					    <div class="id">ID : </div>
-					    <div class="pwd">PWD : </div>
+					    <div class="pwd">PW : </div>
 					    <div class="name"> 이름 : </div>
 					    <div class="국적">국적 : </div>
 					
 					
-						<button href="Change.html">회원정보 수정</button>
-						<button href="MyGyeshigle.html">내 게시글</button>
+						<button class="my-fixed-btn" href="Change.html">회원정보 수정</button>
+						<button class="my-bbs-btn" href="MyGyeshigle.html">내 게시글</button>
 					</ol>
 				</fieldset>
 			</div>
