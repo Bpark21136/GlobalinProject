@@ -13,12 +13,12 @@ public class ReviewController {
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
-	@RequestMapping(value = "/review_form.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/review_form.action", method = RequestMethod.GET)
 	public String loadSideBar() {
 		return "reviews/review_form";
 	}
 	
-	@RequestMapping(value = "/review_detail.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/review_detail.action", method = RequestMethod.GET)
 	public String loadContent() {
 		return "reviews/review_detail";
 	}

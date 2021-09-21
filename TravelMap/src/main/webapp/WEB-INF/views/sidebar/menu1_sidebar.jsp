@@ -7,7 +7,7 @@
         <div class="input-group">
             <input class="form-control py-2" type="search" value="" id="search-input" onkeyup="enterKey();">
             <span class="input-group-append">
-                <button class="btn btn-outline-secondary" type="submit" onclick="search();">
+                <button class="btn btn-outline-secondary" type="submit" onclick="search($('#search-input').val(),1);">
                     <i class="fa fa-search"></i>
                 </button>
             </span>

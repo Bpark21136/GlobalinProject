@@ -15,12 +15,13 @@ const latCenter = 37.21;
 const CENTER = {lat: latCenter, lng: lngCenter};
 //초기 지도 중앙
 
-
+const pointPage = 1;//현재 표시되는 점들의 페이지
 const points = [{position:{lat : 37.566668,lng: 126.978416}, name:'서울시청',id: '1'},
 	{position:{lat :35.68963375008537,lng: 139.69209961979337}, name:'도쿄도청',id: '2'},
 	{position:{lat :36.320541,lng: 131.806041}, name:'바다',id:'3'},
 	{position:{lat :35.845552,lng: 134.094556}, name:'바다',id:'4'},
 	{position:{lat : 35.130716816459135,lng: 132.60117561767552}, name:'sambe rest Area',id:'5'}];
+const reviewPage = 1;//현재 표시되는 리뷰들의 페이지
 const reviews= [{title : "리뷰1", content: "내용1",author: "작성자1",country : "korea",pointID:'1',reviewID:'1'},{title : "리뷰2", content: "내용2",author: "작성자2",country : "japan"}];
 var markers = new Array();
 	
@@ -130,9 +131,11 @@ function enterKey() {
 }//검색하고 엔터치면 검색기능과 같은 효과
 
 /*----장소 검색 창 관련 --------*/
-function search() {
+function search(query,page) {
+	var queryWrapper = {query: query, page:page};
 	console.log('search');
 	initSearch();
+	//ajax로 검색
 	mark(points);
 	showResult(points);
 	$('#search-result_0').trigger('click');
@@ -152,7 +155,7 @@ function initSearch() {
 }//검색버튼 누를시 검색결과 초기화
 
 
-function showResult(points) {
+function showResult(points,page) {
 	points.forEach((el,i) => {
 		$(`<div id="search-result_${i}" class="search-result row">
 		<div style="cursor:pointer;padding:15px;" class="col-10" >${el.name}</div>
@@ -349,6 +352,7 @@ function showNewPointPrompt(markerWrapper,defaultButton,cancelOkButton,okButton)
 	var result = prompt('이 장소의 이름을 입력해 주세요',''); 
 	console.log(markerWrapper.marker.getPosition());
 	if(result) { 
+		//ajax create
 		points.length = 0;
 		points.push({position: {lat : markerWrapper.marker.getPosition().lat(), lng : markerWrapper.marker.getPosition().lng()},
 			name:result,id:null});

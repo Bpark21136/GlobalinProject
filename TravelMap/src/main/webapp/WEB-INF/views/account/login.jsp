@@ -39,7 +39,7 @@
 	
 	var loginOk = function( id, password ){
 		$.ajax({
-			url: './login.action',
+			url: './loginOK.action',
 			data: {
 				id: id,
 				password: password
@@ -47,9 +47,9 @@
 			type: 'post',
 			datatype: 'json',
 			success: function( json ) {
-				if( json.flag == 1 ){
+				if( json.sqlOK == 1 ){
 					//alert('성공');
-					location.href = './newDashboard.do';
+					location.href = './start.action';
 				} else {
 					alert("아이디/패스워드 오류");
 					//location.href = './newDashboard.jsp';
