@@ -14,12 +14,12 @@ public class MenuController {
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
-	@RequestMapping(value = "/sidebar.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/sidebar.action", method = RequestMethod.GET)
 	public String loadSideBar(@RequestParam String id) {
 		return "content/" + id + "_content";
 	}
 	
-	@RequestMapping(value = "/content.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/content.action", method = RequestMethod.GET)
 	public String loadContent(@RequestParam String id) {
 		return "sidebar/" + id + "_sidebar";
 	}

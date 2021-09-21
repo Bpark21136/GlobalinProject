@@ -131,8 +131,8 @@
 		}
 		function loadMenu(id) {
 			console.log(id.slice(4));
-			$('#sidebar-content-wrapper').load('content.do?id=' + id);
-			$('#page-content-wrapper').load('sidebar.do?id=' + id);
+			$('#sidebar-content-wrapper').load('content.action?id=' + id);
+			$('#page-content-wrapper').load('sidebar.action?id=' + id);
 			
 			if(id.slice(4) != 1) { // 사이드 바 안쓰는 경우
 				$('#shirinkable-layout').css("display","none");
