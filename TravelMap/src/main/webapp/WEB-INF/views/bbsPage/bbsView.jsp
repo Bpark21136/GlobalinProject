@@ -34,6 +34,13 @@
 }
 .background-white{
 	background-color:white;
+	border-radius: 20px;
+	padding-top:30px;
+	padding-bottom:30px;
+}
+.padding {
+	padding-top:30px;
+	padding-bottom:30px;
 }
 </style>
 
@@ -42,7 +49,7 @@
 	<div style="position:fixed;top:0px;right:0px;cursor:pointer;" onclick="toggleReviewDetail(false)">
 		<i class="fa fa-window-close fa-fw fa-2x" aria-hidden="true"></i>
 	</div>
-	<article>
+	<article class="padding">
 		<div class="container background-white">
 			<header>
 				<div class="header-wrapper">
