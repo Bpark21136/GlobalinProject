@@ -4,6 +4,7 @@
     pageEncoding="UTF-8"%>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <%int menu = (Integer) request.getAttribute("menu"); %>
+
 <html>
 <head>
  	<link rel="stylesheet" href="<c:url value="/resources/static/libs/bootstrap-4.4.1-dist/css/bootstrap.min.css"/>">
@@ -52,7 +53,11 @@
 	      		</a>
 	      		</li>
           <li>
-          <button type="button" onclick="location.href='./login.action'" class="btn btn-secondary" id="btn" >로그인</button></li>
+          <%if(request.getAttribute("userId") == null) { %>
+          	<button type="button" onclick="location.href='./login.action'" class="btn btn-secondary" id="btn" >로그인</button></li>
+          <%} else if(request.getAttribute("userId") != null) {%>
+          	<button type="button" onclick="location.href='./logout.action'" class="btn btn-secondary" id="btn" >로그아웃</button></li>
+          <%} %>
           <li><br/><div id="google_translate_element"></div>
 			<script type="text/javascript">
 			function googleTranslateElementInit() {
