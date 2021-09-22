@@ -18,9 +18,26 @@
 			
 			
 		</div>
+		<div style="display:flex;justify-content: center;">
+				<button style="width:24px;height:24px"class="btn btn-outline-secondary btn-sm" onclick="pointPrev()">
+		                   <i class="fa fa-angle-left"></i>
+		        </button>
+		        <span id="point-current-page">
+		        1
+		        </span>
+		        <span>
+		        /
+		        </span>
+		        <span id="point-max-page">
+		        1
+		        </span>
+		        <button style="width:24px;height:24px"class="btn btn-outline-secondary btn-sm" onclick="pointNext()">
+		                   <i class="fa fa-angle-right"></i>
+		        </button>
+			</div>
 		<div id="review-list-wrapper" class="shrink">
 			<div>
-				<button style="width:38px;height:38px"class="btn btn-outline-secondary" onclick="shrinkToggle('review-list-wrapper');">
+				<button style="width:38px;height:38px"class="btn btn-outline-secondary" onclick="shrinkToggle('review-list-wrapper');$('#search-result-wrapper').css('overflow-y','overlay');">
 	                   <i class="fa fa-angle-left"></i>
 	               </button>
 	           <button style="position:relative;width:100px;left:calc(300px - 100px - 100px - 38px - 8px); visibility:visible;"  class="btn btn-outline-danger" onclick="deletePoint();">
@@ -33,6 +50,26 @@
 			<div id="review-list">
 			
 			</div>
+			<div style="display:flex;justify-content: center;">
+				<button style="width:24px;height:24px"class="btn btn-outline-secondary btn-sm" onclick="">
+		                   <i class="fa fa-angle-left"></i>
+		        </button>
+		        <span id="review-current-page">
+		        
+		        </span>
+		        <span>
+		        /
+		        </span>
+		        <span id="review-max-page">
+		        </span>
+		        <button style="width:24px;height:24px"class="btn btn-outline-secondary btn-sm" onclick="">
+		                   <i class="fa fa-angle-right"></i>
+		        </button>
+			</div>
 		</div>
 	</div>
+	<script>
+		var current_query = "";
+		var current_page = 1;
+	</script>
 </html>

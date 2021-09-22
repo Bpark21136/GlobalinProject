@@ -1,9 +1,10 @@
-package com.web.travel;
+package com.web.travel.mapper;
 
 import java.util.ArrayList;
-import accountDTO.accountDTO;
 
-public interface Mapper {
+import com.web.travel.dto.accountDTO;
+
+public interface AccountMapper {
 	// 로그인 확인 sql문
 	public abstract int loginSelect(accountDTO dto);
 	

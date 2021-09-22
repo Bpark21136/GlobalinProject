@@ -53,7 +53,6 @@
 	      		</a>
 	      		</li>
           <li>
-
           <li><a class="<%=menu ==  5 ?  "sel" : "" %>" onclick="menuClick(this.id)" id="menu5" >
 	      		<img src="<c:url value="/resources/static/img/sidebar_menu3.png"/>">
 	      		</a>
@@ -87,6 +86,9 @@
 	</div>
 		<!-- /.container -->
 	<script type="text/javascript">
+		var logined = <%=(String)request.getAttribute("userId") != null  ? "true" : "false" %>;
+		var uid = '<%=(String)request.getAttribute("userId")%>';
+		console.log(uid);
 		var menu = <%=menu%>;
 		loadMenu('menu' + menu);
 		console.log('menu',menu);

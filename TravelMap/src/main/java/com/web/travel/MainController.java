@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import accountDTO.accountDTO;
+import com.web.travel.dto.accountDTO;
 
 @Controller
 public class MainController {
@@ -57,7 +57,7 @@ public class MainController {
 			
 		to.setUserId(userId);
 		to.setHashedPassword(password);
-	
+		
 		int sqlOK = 0;
 
 		if(sqlSession.selectOne("loginSelect", to) != null) {

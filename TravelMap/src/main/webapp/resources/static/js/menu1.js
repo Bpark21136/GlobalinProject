@@ -31,6 +31,7 @@ var selectedMarkerId = null;//현재 선택된 마커 id
 /*--------------전역변수-----------------*/
 
 
+
 function initMap() {
   console.log("MAP_BOUNDS :",MAP_BOUNDS );
   console.log("lngCenter :",lngCenter);
@@ -46,10 +47,10 @@ function initMap() {
   
   map.addListener("click",defaultMapClickListener);
 
-  const newPointModeButton = document.createElement("div");
-  createNewPointModeButton(newPointModeButton);
-  
-  
+  if(logined) {
+   const newPointModeButton = document.createElement("div");
+   createNewPointModeButton(newPointModeButton);
+  }//로그인 상태에서만 위치추가 가능
 }
 
 function defaultMapClickListener(event) {
@@ -121,145 +122,10 @@ function focusToMarker(marker) {
 
 /*-------------sidebar------------------*/
 
-var query;
 /*--------------전역변수---------------------*/
 
-function enterKey() {
-	if(window.event.keyCode == 13) {
-		search();
-	}
-}//검색하고 엔터치면 검색기능과 같은 효과
 
-/*----장소 검색 창 관련 --------*/
-function search(query,page) {
-	var queryWrapper = {query: query, page:page};
-	console.log('search');
-	initSearch();
-	//ajax로 검색
-	mark(points);
-	showResult(points);
-	$('#search-result_0').trigger('click');
-	
-}//검색버튼 누르면 검색결과 받아오고 페이징 한다음에 맵에 마커 찍고 검색결과 사이드바에 표시함
-
-function initSearch() {
-	for (let i = 0; i < markers.length; i++) {
-    markers[i].setMap(null);
-  }
-	markers= [];
-	$('#search-result-wrapper').empty();
-	if(!$('#review-list-wrapper').hasClass('shrink')){
-		shrinkToggle('review-list-wrapper');
-  	}
-	
-}//검색버튼 누를시 검색결과 초기화
-
-
-function showResult(points,page) {
-	points.forEach((el,i) => {
-		$(`<div id="search-result_${i}" class="search-result row">
-		<div style="cursor:pointer;padding:15px;" class="col-10" >${el.name}</div>
-			<div class="col-2">
-				<button class="btn btn-secondary search-result-btn" onclick="return loadReview()">
-					<i class="fa fa-angle-right"></i>
-				</button>
-			</div>`)
-		.appendTo('#search-result-wrapper');
-		console.log(markers[i]);
-		$('#search-result_' + i).click(function (){
-			google.maps.event.trigger(markers[i], 'click');
-		});
-			
-	});
-}//사이드바의 검색결과 클릭해도 마커 클릭한거랑 같은 결과
-
-function highlight(id) {
-	console.log('highlight id : '+ id);
-	if(id !== null) {
-		const selected = document.getElementById('search-result_' + id);
-		selected.classList.add('highlight');
-	}
-}
-function disableHighlight(id) {
-	if(id !== null) {
-		const selected = document.getElementById('search-result_' + id);
-		selected.classList.remove('highlight');
-	}
-}
-
-function deletePoint(){
-	//내가 추가한 장소라면 삭제
-}
-/*-----review탭 관련-------*/
-
-
-function loadReview() {
-	event.stopPropagation();
-	$('#review-list').empty();
-	shrinkToggle('review-list-wrapper');
-	reviews.forEach((el,i) => {
-		$(`<div class="review-div">
-            <div class="review-title">${el.title}</div>
-            <div class="review-author">
-                <span class="author-name">${el.author}</span>
-                <img class="author-img" src="${el.country}.png">${el.country}</img>
-            </div>
-            <hr>
-            <div class="review-content">
-                ${el.content}
-            </div>
-            <div class="more">
-                <span class="more-span" onclick="toggleReviewDetail(true);">
-                    more >
-                </span>
-            </div>
-        </div>`)
-		.appendTo('#review-list');
-		console.log(markers[i]);
-		$('#search-result_' + i).click(function (){
-			google.maps.event.trigger(markers[i], 'click');
-		});
-			
-	});
-	return false;
-}
-
-function toggleReviewForm(flag) {
-	if(flag) {
-		$('#review-form').load('review_form.do');
-		$('#review-form').css('display','block');
-		$('#review-detail').css('display','none');
-	}
-	else {
-		$('#review-form').css('display','none');
-	}
-	
-}
-function toggleReviewDetail(flag) {
-	if(flag) {
-		$('#review-detail').load('review_detail.do');
-		$('#review-detail').css('display','block');
-		$('#review-form').css('display','none');
-	}
-	else {
-		$('#review-detail').css('display','none');
-	}
-	
-}
-function loadDetailForm() {
-	$('#review-detail').load('review_detail.do');
-}//(more >) 버튼 눌렀을 때
-
-function sendReviewForm() {
-	//ajax;
-}// 리뷰 쓰기 눌렀을 때
-
-
-function writeButtonClick() {
-	
-}//새로운 리뷰 등록
-
-/*위치 추가 모드 관련*/
+/*위치 추가 기능*/
 function createNewPointModeButton(controlDiv) {
 	  const controlUI = document.createElement("div");
 
@@ -352,12 +218,221 @@ function showNewPointPrompt(markerWrapper,defaultButton,cancelOkButton,okButton)
 	var result = prompt('이 장소의 이름을 입력해 주세요',''); 
 	console.log(markerWrapper.marker.getPosition());
 	if(result) { 
-		//ajax create
-		points.length = 0;
-		points.push({position: {lat : markerWrapper.marker.getPosition().lat(), lng : markerWrapper.marker.getPosition().lng()},
-			name:result,id:null});
-		//id에 null대신 db의 id 받아오기
-		toggleNewPointMode(false,markerWrapper,defaultButton,cancelOkButton,okButton);
-		search();	
+		var sendData = {"lat":markerWrapper.marker.getPosition().lat(),"lng":markerWrapper.marker.getPosition().lng(),"name":result};
+		console.log(sendData);
+		$.ajax({
+	        url:'insert_point.do'
+	        , method : 'POST'
+	        , data: JSON.stringify(sendData)
+			, async: false
+	        ,contentType : 'application/json; charset=UTF-8'
+	        ,dataType : 'json'
+	        , success : function(resp) {
+				console.log(resp);
+				if(resp.error != null) {
+					alert('장소 등록에 실패했습니다.');
+					toggleNewPointMode(false,markerWrapper,defaultButton,cancelOkButton,okButton);
+					return;
+				}//에러발생
+				
+	            points.length = 0;
+				points.push({position: {lat : markerWrapper.marker.getPosition().lat(), lng : markerWrapper.marker.getPosition().lng()},
+					name:result,id:resp.pointId});
+				//id에 null대신 db의 id 받아오기
+				
+				toggleNewPointMode(false,markerWrapper,defaultButton,cancelOkButton,okButton);
+				mark(points);
+				showResult(points);
+				$('#search-result_0').trigger('click');
+				//삽입된 포인트 표시
+	        }
+		   , error : function( error ) {
+				alert('장소 등록에 실패했습니다.');
+				toggleNewPointMode(false,markerWrapper,defaultButton,cancelOkButton,okButton);
+			}
+	    });//ajax create
 	}
 }
+
+/*----장소 검색 창 관련 --------*/
+function enterKey() {
+	if(window.event.keyCode == 13) {
+		search();
+	}
+}//검색하고 엔터치면 검색기능과 같은 효과
+
+
+function search(query,page) {
+	console.log('search',query,page);
+	initSearch();
+	current_query = query;
+	current_page = page;
+	var sendData = {"query": query,"page": page};
+	$.ajax({
+        url:'point_search.action'
+        , method : 'POST'
+        , data: JSON.stringify(sendData)
+        ,contentType : 'application/json; charset=UTF-8'
+        ,dataType : 'json'
+        , success : function(resp) {
+			console.log(resp);
+			if(resp == null) {
+				$('#point-current-page').text(1);
+				$('#point-max-page').text(1);
+				current_query = "";
+				current_page = 1;
+				return;
+			}
+			points.length = 0;
+            resp.points.forEach((el) => {
+				var point = {position: {lat : el.lat,lng : el.lng},name : el.name,id :el.pointID};
+				points.push(point);
+			});
+			mark(points);
+			showResult(points);
+			$('#search-result_0').trigger('click');
+			$('#point-current-page').text(page);
+			$('#point-max-page').text(resp.maxPage);
+			
+        }
+	   , error : function(error) {
+			$('#point-current-page').text(1);
+			$('#point-max-page').text(1);
+			current_query = "";
+			current_page = 1;
+	}
+    });//ajax로 검색
+}//검색버튼 누르면 검색결과 받아오고 페이징 한다음에 맵에 마커 찍고 검색결과 사이드바에 표시함
+
+function pointNext() {
+	if($('#point-current-page').text() >= $('#point-max-page').text()){
+		return;
+	}
+	search(current_query,current_page + 1);
+}
+function pointPrev() {
+	if($('#point-current-page').text() == 1){
+		return;
+	}
+	search(current_query,current_page - 1);
+}
+
+function initSearch() {
+	for (let i = 0; i < markers.length; i++) {
+    markers[i].setMap(null);
+  }
+	markers= [];
+	$('#search-result-wrapper').empty();
+	if(!$('#review-list-wrapper').hasClass('shrink')){
+		shrinkToggle('review-list-wrapper');
+  	}
+	
+}//검색버튼 누를시 검색결과 초기화
+
+
+function showResult(points) {
+	points.forEach((el,i) => {
+		$(`<div id="search-result_${i}" class="search-result row" value="${el.id}">
+		<div style="cursor:pointer;padding:15px;" class="col-10" >${el.name}</div>
+			<div class="col-2">
+				<button class="btn btn-secondary search-result-btn" onclick="return loadReview()">
+					<i class="fa fa-angle-right"></i>
+				</button>
+			</div>`)
+		.appendTo('#search-result-wrapper');
+		console.log(markers[i]);
+		$('#search-result_' + i).click(function (){
+			google.maps.event.trigger(markers[i], 'click');
+		});
+			
+	});
+}//사이드바의 검색결과 클릭해도 마커 클릭한거랑 같은 결과
+
+function highlight(id) {
+	console.log('highlight id : '+ id);
+	if(id !== null) {
+		const selected = document.getElementById('search-result_' + id);
+		selected.classList.add('highlight');
+	}
+}
+function disableHighlight(id) {
+	if(id !== null) {
+		const selected = document.getElementById('search-result_' + id);
+		selected.classList.remove('highlight');
+	}
+}
+
+function deletePoint(){
+	//내가 추가한 장소라면 삭제
+}
+/*-----review탭 관련-------*/
+
+
+function loadReview() {
+	event.stopPropagation();
+	$('#review-list').empty();
+	shrinkToggle('review-list-wrapper');
+	$('#search-result-wrapper').css('overflow-y','hidden');
+	reviews.forEach((el,i) => {
+		$(`<div class="review-div">
+            <div class="review-title">${el.title}</div>
+            <div class="review-author">
+                <span class="author-name">${el.author}</span>
+                <img class="author-img" src="${el.country}.png">${el.country}</img>
+            </div>
+            <hr>
+            <div class="review-content">
+                ${el.content}
+            </div>
+            <div class="more">
+                <span class="more-span" onclick="toggleReviewDetail(true);">
+                    more >
+                </span>
+            </div>
+        </div>`)
+		.appendTo('#review-list');
+		console.log(markers[i]);
+		$('#search-result_' + i).click(function (){
+			google.maps.event.trigger(markers[i], 'click');
+		});
+			
+	});
+	return false;
+}
+
+function toggleReviewForm(flag) {
+	if(flag) {
+		$('#review-form').load('review_form.action');
+		$('#review-form').css('display','block');
+		$('#review-detail').css('display','none');
+	}
+	else {
+		$('#review-form').css('display','none');
+	}
+	
+}
+function toggleReviewDetail(flag) {
+	if(flag) {
+		$('#review-detail').load('review_detail.action');
+		$('#review-detail').css('display','block');
+		$('#review-form').css('display','none');
+	}
+	else {
+		$('#review-detail').css('display','none');
+	}
+	
+}
+function loadDetailForm() {
+	$('#review-detail').load('review_detail.action');
+}//(more >) 버튼 눌렀을 때
+
+function sendReviewForm() {
+	//ajax;
+}// 리뷰 쓰기 눌렀을 때
+
+
+function writeButtonClick() {
+	
+}//새로운 리뷰 등록
+
+
