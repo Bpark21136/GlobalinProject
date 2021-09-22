@@ -26,4 +26,8 @@
 	<select id="getMaxPage" resultType="int">
 		SELECT CEILING(COUNT(*)/10) FROM POINT WHERE NAME like CONCAT('%',#{query},'%')
 	</select>
+	
+	<delete id="deletePoint">
+		DELETE FROM POINT WHERE USERID like CONCAT('%',#{userID},'%') AND POINTID = #{pointID}
+	</delete>
 </mapper>

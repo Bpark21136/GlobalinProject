@@ -1,11 +1,11 @@
 package com.web.travel.dto;
 
 public class PointDTO {
-	long pointID;
-	String name;
-	double lat;
-	double lng;
-	String userID;
+	private long pointID;
+	private String name;
+	private double lat;
+	private double lng;
+	private String userID;
 	
 	public long getPointID() {
 		return pointID;

@@ -73,4 +73,14 @@ public class PointServiceImpl implements PointService {
 		
 	}
 
+	@Override
+	public int deletePoint(long pointID,String userID) {
+		try {
+			return pointMapper.deletePoint(pointID,userID);
+		} catch (Exception e) {
+			return 0;
+		}
+		
+	}
+
 }

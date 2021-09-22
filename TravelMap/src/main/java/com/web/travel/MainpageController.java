@@ -66,5 +66,26 @@ public class MainpageController {
 		return ps.searchPoint(query.trim() , page);	
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/point_delete.do", method=RequestMethod.POST)
+	public Map<String,Object> deletePoint(@RequestBody Map<String,String> map, HttpSession session) {
+		long pointID = Long.parseLong(map.get("pid"));
+		logger.debug("" + pointID);
+		
+		String uid = session.getAttribute("userId").toString();
+		if(uid == null)
+			return null;
+		
+		int code = ps.deletePoint(pointID,uid);
+		if(code != 1)
+			return null;
+		
+		
+		Map<String,Object> ret = new HashMap<String, Object>();
+		ret.put("code", code);
+		return ret;
+		
+	}
+	
 	
 }

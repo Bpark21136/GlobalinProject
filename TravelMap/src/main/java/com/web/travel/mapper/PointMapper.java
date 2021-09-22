@@ -13,4 +13,5 @@ public interface PointMapper {
 	public abstract long insertPoint(PointDTO dto) throws Exception;
 	public abstract ArrayList<PointDTO> searchPoint(@Param(value = "query") String query,@Param(value = "page") int page) throws Exception;
 	public abstract int getMaxPage(@Param(value = "query") String query) throws Exception;
+	public abstract int deletePoint(@Param(value = "pointID")long pointID, @Param(value = "userID")String userID);
 }

@@ -40,10 +40,10 @@
 				<button style="width:38px;height:38px"class="btn btn-outline-secondary" onclick="shrinkToggle('review-list-wrapper');$('#search-result-wrapper').css('overflow-y','overlay');">
 	                   <i class="fa fa-angle-left"></i>
 	               </button>
-	           <button style="position:relative;width:100px;left:calc(300px - 100px - 100px - 38px - 8px); visibility:visible;"  class="btn btn-outline-danger" onclick="deletePoint();">
+	           <button id="point-delete-button" style="position:relative;width:100px;left:calc(300px - 100px - 100px - 38px - 8px); visibility:visible;" class="btn btn-outline-danger">
                    장소삭제
                </button>
-               <button style="position:relative;width:100px;left:calc(300px - 100px - 100px - 38px - 12px);" class="btn btn-outline-primary" onclick="toggleReviewForm(true);">
+               <button id="review-write-button" style="position:relative;width:100px;left:calc(300px - 100px - 100px - 38px - 12px);" class="btn btn-outline-primary">
                    리뷰쓰기
                </button>
 			</div>

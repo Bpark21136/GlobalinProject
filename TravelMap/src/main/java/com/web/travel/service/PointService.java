@@ -8,4 +8,5 @@ public interface PointService {
 	public abstract long insertPoint(PointDTO dto);
 	public abstract int getMaxPage(String query);
 	public abstract Map<String,Object> searchPoint(String query,int page);
+	public abstract int deletePoint (long pointID,String uid);
 }

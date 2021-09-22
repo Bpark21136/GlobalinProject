@@ -16,13 +16,13 @@ const CENTER = {lat: latCenter, lng: lngCenter};
 //초기 지도 중앙
 
 const pointPage = 1;//현재 표시되는 점들의 페이지
-const points = [{position:{lat : 37.566668,lng: 126.978416}, name:'서울시청',id: '1'},
+const points = [{position:{lat : 37.566668,lng: 126.978416}, name:'서울시청',id: '1',uid:'han1g'},
 	{position:{lat :35.68963375008537,lng: 139.69209961979337}, name:'도쿄도청',id: '2'},
 	{position:{lat :36.320541,lng: 131.806041}, name:'바다',id:'3'},
 	{position:{lat :35.845552,lng: 134.094556}, name:'바다',id:'4'},
 	{position:{lat : 35.130716816459135,lng: 132.60117561767552}, name:'sambe rest Area',id:'5'}];
 const reviewPage = 1;//현재 표시되는 리뷰들의 페이지
-const reviews= [{title : "리뷰1", content: "내용1",author: "작성자1",country : "korea",pointID:'1',reviewID:'1'},{title : "리뷰2", content: "내용2",author: "작성자2",country : "japan"}];
+const reviews= [{title : "리뷰1",preview:"내용1" ,content: "내용1",author: "작성자1",country : "korea",pointID:'1',reviewID:'1'},{title : "리뷰2",preview:"내용1" , content: "내용2",author: "작성자2",country : "japan"}];
 var markers = new Array();
 	
 var selectedMarker = null;//현재 선택된 마커(점프뛰고 있는놈)
@@ -285,7 +285,7 @@ function search(query,page) {
 			}
 			points.length = 0;
             resp.points.forEach((el) => {
-				var point = {position: {lat : el.lat,lng : el.lng},name : el.name,id :el.pointID};
+				var point = {position: {lat : el.lat,lng : el.lng},name : el.name,id :el.pointID,uid:el.userID};
 				points.push(point);
 			});
 			mark(points);
@@ -332,10 +332,10 @@ function initSearch() {
 
 function showResult(points) {
 	points.forEach((el,i) => {
-		$(`<div id="search-result_${i}" class="search-result row" value="${el.id}">
+		$(`<div id="search-result_${i}" class="search-result row" data-pid="${el.id}" data-uid="${el.uid}">
 		<div style="cursor:pointer;padding:15px;" class="col-10" >${el.name}</div>
 			<div class="col-2">
-				<button class="btn btn-secondary search-result-btn" onclick="return loadReview()">
+				<button class="btn btn-secondary search-result-btn" onclick="return loadReview('#search-result_${i}')">
 					<i class="fa fa-angle-right"></i>
 				</button>
 			</div>`)
@@ -361,18 +361,46 @@ function disableHighlight(id) {
 		selected.classList.remove('highlight');
 	}
 }
-
-function deletePoint(){
-	//내가 추가한 장소라면 삭제
+function deletePoint(selectedDiv){
+	var sendData = {"pid": $(selectedDiv).data('pid')};
+	console.log('deletePoint sendData',sendData);
+	$.ajax({
+        url:'point_delete.do'
+        , method : 'POST'
+        , data: JSON.stringify(sendData)
+        ,contentType : 'application/json; charset=UTF-8'
+        ,dataType : 'json'
+        , success : function(resp) {
+			if(resp == null) {
+				alert("삭제에 실패했습니다.");
+			}
+			alert("장소가 삭제 되었습니다.");
+			location.reload();
+        }
+	    , error : function(error) {
+			alert("삭제에 실패했습니다.");
+		}
+    });//ajax로 검색
 }
+
 /*-----review탭 관련-------*/
 
-
-function loadReview() {
+function loadReview(selectedDiv) {
+	if(uid == $(selectedDiv).data('uid')) {
+		$('#point-delete-button').css('visibility','visible');
+		$("#point-delete-button").off('click').on('click',function(){deletePoint(selectedDiv);});
+		$("#review-write-button").off('click').on('click',function(){toggleReviewForm(true,selectedDiv);});
+	}
+	else {
+		$('#point-delete-button').css('visibility','hidden');
+	}
 	event.stopPropagation();
 	$('#review-list').empty();
 	shrinkToggle('review-list-wrapper');
 	$('#search-result-wrapper').css('overflow-y','hidden');
+	
+	
+	
 	reviews.forEach((el,i) => {
 		$(`<div class="review-div">
             <div class="review-title">${el.title}</div>
@@ -382,7 +410,7 @@ function loadReview() {
             </div>
             <hr>
             <div class="review-content">
-                ${el.content}
+                ${el.preview}
             </div>
             <div class="more">
                 <span class="more-span" onclick="toggleReviewDetail(true);">
@@ -400,9 +428,11 @@ function loadReview() {
 	return false;
 }
 
-function toggleReviewForm(flag) {
+function toggleReviewForm(flag,selectedDiv) {
+	if(uid == null) return;
+	
 	if(flag) {
-		$('#review-form').load('review_form.action');
+		$('#review-form').load('review_form.do',{"pid":$(selectedDiv).data('pid')});
 		$('#review-form').css('display','block');
 		$('#review-detail').css('display','none');
 	}
@@ -421,9 +451,6 @@ function toggleReviewDetail(flag) {
 		$('#review-detail').css('display','none');
 	}
 	
-}
-function loadDetailForm() {
-	$('#review-detail').load('review_detail.action');
 }//(more >) 버튼 눌렀을 때
 
 function sendReviewForm() {

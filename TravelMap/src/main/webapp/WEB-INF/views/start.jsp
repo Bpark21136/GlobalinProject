@@ -87,7 +87,7 @@
 		<!-- /.container -->
 	<script type="text/javascript">
 		var logined = <%=(String)request.getAttribute("userId") != null  ? "true" : "false" %>;
-		var uid = '<%=(String)request.getAttribute("userId")%>';
+		var uid = <%=(String)request.getAttribute("userId") != null  ? "'" + (String)request.getAttribute("userId") + "'" : "null" %>;
 		console.log(uid);
 		var menu = <%=menu%>;
 		loadMenu('menu' + menu);

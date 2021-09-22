@@ -34,9 +34,13 @@
 }
 .background-white{
 	background-color:white;
+	border-radius: 20px;
+	padding-top:30px;
+	padding-bottom:30px;
 }
-.background-purple {
-	background-color:var(--back-color);
+.padding {
+	padding-top:30px;
+	padding-bottom:30px;
 }
 </style>
 
@@ -45,8 +49,8 @@
 	<div style="position:fixed;top:0px;right:0px;cursor:pointer;" onclick="toggleReviewDetail(false)">
 		<i class="fa fa-window-close fa-fw fa-2x" aria-hidden="true"></i>
 	</div>
-	<article>
-		<div class="container background-purple">
+	<article class="padding">
+		<div class="container background-white">
 			<header>
 				<div class="header-wrapper">
 					<h3 class="title ub-word">
@@ -60,7 +64,6 @@
 						</div>
 						<div class="fl fr">
 							<span class="view_count">조회 306</span><!-- jsp -->
-							<span class="recommend_count">추천 4</span><!-- jsp -->
 							<span class="comment_count">댓글 2</span><!-- jsp -->
 						</div>
 					</div>
@@ -73,7 +76,6 @@
 				</div>
 				<hr>
 				<div class="fl fr">
-					<button class="btn btn-outline-info btn-sm">추천</button><!-- jsp(내 글이 아닐 경우) -->
 					<button class="btn btn-outline-secondary btn-sm">수정</button><!-- jsp(내가 쓴 글일 경우) -->
 					<button class="btn btn-outline-danger btn-sm">삭제</button><!-- jsp(내가 쓴 글일 경우) -->
 				</div>
