@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.travel.mapper.CommentMapper">
+	<insert id="insertComment" parameterType="com.web.travel.dto.ReviewDTO" useGeneratedKeys="true" keyProperty="commentID">
+		insert into comment ( 
+			content,
+			userid,
+			reviewid,
+			articleid
+		)
+		values (
+			#{content}, 
+			#{userID}, 
+			#{reviewID}, 
+			#{articleID}
+		)
+	</insert>
+	<select id="selectCommentById" resultType="hashMap">
+		select COMMENTID, C.USERID,COUNTRY,DATE,CONTENT from COMMENT C inner join USER U on C.userID = U.userID where commentID = #{commentID}
+	</select>
+	
+	
+	
+	<select id="getCommentListByRid" resultType="hashMap">
+		select COMMENTID, C.USERID,COUNTRY,DATE,CONTENT from COMMENT C inner join USER U on C.userID = U.userID where reviewID = #{reviewID}
+	</select>
+</mapper>

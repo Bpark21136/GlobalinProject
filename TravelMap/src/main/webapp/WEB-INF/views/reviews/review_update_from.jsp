@@ -101,11 +101,8 @@
 								return;
 							}
 							alert("등록 되었습니다.");
+							location.reload();
 							toggleReviewForm(false);
-							loadReview(review_selected_div,1);
-							$('#review-detail').load('review_detail.action',{"rid":resp.id});
-							$('#review-detail').css('display','block');
-							$('#review-form').css('display','none');
 							
 				        }
 					    , error : function(error) {

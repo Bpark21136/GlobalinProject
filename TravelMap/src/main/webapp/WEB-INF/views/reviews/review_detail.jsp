@@ -1,7 +1,11 @@
+<%@page import="org.springframework.web.servlet.ModelAndView"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.Map"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
+<%ArrayList<Map<String,Object>> comments = (ArrayList<Map<String,Object>>) request.getAttribute("comments");%>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
@@ -54,17 +58,13 @@
 			<header>
 				<div class="header-wrapper">
 					<h3 class="title ub-word">
-						<span class="title_subject">제목</span>
+						<span class="title_subject">${TITLE}</span>
 					</h3>
 					<div class="writer">
 						<div class="fl">
-							<span class="nickname"><em>닉네임</em></span>
-							<span class="country"><img src="country_n.png"></img></span>
-							<span>2021.09.16 09:27:36</span>
-						</div>
-						<div class="fl fr">
-							<span class="view_count">조회 306</span><!-- jsp -->
-							<span class="comment_count">댓글 2</span><!-- jsp -->
+							<span class="nickname"><em>${USERID}</em></span>
+							<span class="country"><img src="${COUNTRY}.png"></img></span>
+							<span>${DATE}</span>
 						</div>
 					</div>
 				</div>
@@ -72,12 +72,14 @@
 			<hr class="fcr">
 			<div class="gallview_contents">
 				<div class="content">
-					<br><br><br><br><br><br>본문<br><br><br><br><br><br>
+					${CONTENT}
 				</div>
 				<hr>
 				<div class="fl fr">
+					<%if(request.getAttribute("CURRENTUSERID") != null && ((String) request.getAttribute("CURRENTUSERID")).equals((String) request.getAttribute("USERID")))  {%>
 					<button class="btn btn-outline-secondary btn-sm">수정</button><!-- jsp(내가 쓴 글일 경우) -->
 					<button class="btn btn-outline-danger btn-sm">삭제</button><!-- jsp(내가 쓴 글일 경우) -->
+					<%}%>
 				</div>
 			</div>
 			<hr class="fcr">
@@ -85,69 +87,89 @@
 				<div class="comment_count">
 					<div class="fl num_box">
 						전체댓글 
-						<em class="font_red">
-							2<!-- jsp -->
+						<em id="comment_num"class="font_red">
+							<%=comments.size() %><!-- ajax -->
 						</em>
 						개
 					</div>
 					<hr class="comment-hr">
 					<div class="comment_box">
-						<ul class="list-group cmt_list">
+						<ul id ="comment_list" class="list-group cmt_list">
+						<%for(Map<String,Object> el : comments)  {%>
 							<li class="list-group-item">
 								<div class="comment_content">
 									<div class="fl">
-										<span class="nickname"><em>ㅇㅇ</em></span><!-- jsp -->
-										<span class="country"><img src="country_n.png"></span><!-- jsp -->
-										<span class="date_time">09.16 09:28:00</span><!-- jsp -->
+										<span class="nickname"><em><%=el.get("USERID").toString()%></em></span><!-- ajax -->
+										<span class="country"><img src="<%=el.get("COUNTRY").toString()%>.png"></span><!-- ajax -->
+										<span class="date_time"><%=el.get("DATE").toString() %></span><!-- ajax -->
 									</div>
 									<div class="comment">
-										<p class="usertxt ub-word">댓글1</p><!-- jsp -->
+										<p class="usertxt ub-word"><%=el.get("CONTENT").toString()%></p><!-- ajax -->
 									</div>
-									<div class="fr"><!-- jsp(내가 쓴 댓글일 경우) -->
-										<button type="button" class="btn btn-outline-danger btn-sm">삭제</button> <!-- ajax -->
+									<%if(request.getAttribute("CURRENTUSERID") != null && ((String) request.getAttribute("CURRENTUSERID")).equals((String) el.get("USERID"))) { %>
+									<div class="fr">
+										<button type="button" class="btn btn-outline-danger btn-sm" onclick="deleteComment(this)">삭제</button> <!-- ajax -->
 									</div>
+									<%}%>
 								</div>
 							</li>
-							<li class="list-group-item">
-								<div class="comment_content">
-									<div class="fl">
-										<span class="nickname"><em>ㅇㅇ</em></span><!-- jsp -->
-										<span class="country"><img src="country_n.png"></span><!-- jsp -->
-										<span class="date_time">09.16 09:28:00</span><!-- jsp -->
-									</div>
-									<div class="comment">
-										<p class="usertxt ub-word">댓글2</p><!-- jsp -->
-									</div>
-								</div>
-							</li>
+						<% }%>
 		  	            </ul>
 		  	        </div>
-		  	        <nav>
-					  <ul class="pagination justify-content-center pagination-sm">
-					    <li class="page-item disabled">
-					      <a class="page-link" href="#" tabindex="-1">1</a>
-					    </li>
-					  </ul>
-					</nav>
-					<!-- 댓글 페이지네이션 -->
 		  	        <hr class="comment-hr fcr"> 
-		  	        <div class="comment_wrtie_box">
-			  	        <div class="fl">
-							<span class="nickname"><em>ㅇㅇ</em></span><!-- jsp -->
-							<span class="country"><img src="(var:countryName).png"></span><!-- jsp -->
-						</div>
-						<div class="form-group">
-						    <label for="exampleFormControlTextarea1">댓글 입력</label>
-						    <textarea class="form-control" style="resize:none;" id="exampleFormControlTextarea1" rows="3"></textarea>
-						</div>
-						<div class="fl fr">
-							<button class="btn btn-success btn-sm">등록</button><!-- ajax -->
-						</div>
-		  	        </div>
+		  	        <%if(request.getAttribute("CURRENTUSERID") != null) { %>
+			  	        <div class="comment_wrtie_box">
+				  	        <div class="fl">
+								<span class="nickname"><em>${CURRENTUSERID}</em></span><!-- jsp -->
+							</div>
+							<div class="form-group">
+							    <label for="exampleFormControlTextarea1">댓글 입력</label>
+							    <textarea class="form-control" style="resize:none;" id="comment_content" rows="3"></textarea>
+							</div>
+							<div class="fl fr">
+								<button class="btn btn-success btn-sm" onclick="insertComment();">등록</button><!-- ajax -->
+							</div>
+			  	        </div>
+		  	        <%}//로그인 된 경우에만 댓글쓰기 가능 %>
 		  	        <hr class="fcr comment-hr"> 
 				</div>		
 			</div>
 		</div>
 	</article>
+	<script type="text/javascript">
+		function insertComment() {
+			var content = $('textarea#comment_content').val();
+			if(content.trim() == '') {
+				alert('댓글 내용이 없습니다.');
+				return;
+			}
+			var sendData = {"rid": ${REVIEWID},"content" : content};
+			console.log(sendData);
+			$.ajax({
+		        url:'comment_create.do'
+		        , method : 'POST'
+		        , data: JSON.stringify(sendData)
+				, async: false
+		        ,contentType : 'application/json; charset=UTF-8'
+		        ,dataType : 'json'
+		        , success : function(resp) {
+					
+					if(resp == null) {
+						alert('댓글 등록에 실패했습니다.');
+						return;
+					}//에러발생
+		           	alert('댓글이 등록되었습니다.');
+					loadNewComment(resp);
+					//새 댓글 문서에 추가
+		        }
+			   , error : function( error ) {
+				   alert('댓글 등록에 실패했습니다.');
+				}
+		    });//ajax create
+		}
+		function deleteComment(el) {
+			
+		}
+	</script>
 </body>
 </html>
