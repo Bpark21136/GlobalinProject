@@ -29,7 +29,7 @@
     width: var(--sidebar-size);
     height: 100%;
     margin-left: calc(-1 * var(--sidebar-size));
-    background: #000;
+    background: var(--answer-back-color);
     overflow-x: hidden;
     /*overflow-y: auto;*/
     overflow-y: overlay;
