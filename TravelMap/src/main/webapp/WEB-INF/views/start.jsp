@@ -34,7 +34,7 @@
 	    <ul class="sidebar-nav">
 	      <li class="sidebar-brand">
 	        <a href="#">
-	        	<img src="<c:url value="/resources/static/img/logo.png"/>">
+	        	<img src="<c:url value="/resources/static/img/logo2.png"/>">
 	        </a>
 	      </li>
 	      <li><a class="<%=menu ==  1 ?  "sel" : "" %>" onclick="menuClick(this.id)" id="menu1" >
