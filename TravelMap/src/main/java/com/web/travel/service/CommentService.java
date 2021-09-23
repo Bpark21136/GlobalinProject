@@ -11,4 +11,5 @@ public interface CommentService {
 	public abstract ArrayList<Map<String, Object>> getCommentListByRid(long rid);
 	public abstract ArrayList<Map<String, Object>> getCommentListByAid(long aid);
 	public abstract ArrayList<Map<String, Object>> getCommentListByUid(String uid);
+	public int deleteReviewComment(long commentID, String uid);
 }

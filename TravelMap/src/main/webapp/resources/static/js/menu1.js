@@ -394,10 +394,17 @@ function loadReview(selectedDiv,page) {
 	if(uid == $(selectedDiv).data('uid')) {
 		$('#point-delete-button').css('visibility','visible');
 		$("#point-delete-button").off('click').on('click',function(){deletePoint(selectedDiv);});
-		$("#review-write-button").off('click').on('click',function(){toggleReviewForm(true,selectedDiv);});
+		
 	}
 	else {
 		$('#point-delete-button').css('visibility','hidden');
+		
+	}
+	if(uid != null) {
+		$("#review-write-button").css('visibility','visible');
+		$("#review-write-button").off('click').on('click',function(){toggleReviewForm(true,selectedDiv);});
+	} else {
+		$("#review-write-button").css('visibility','hidden');
 	}
 	event.stopPropagation();
 	$('#review-list').empty();
@@ -429,7 +436,7 @@ function loadReview(selectedDiv,page) {
 	            <div class="review-title">${el.title}</div>
 	            <div class="review-author">
 	                <span class="author-name">${el.uid}</span>
-	                <img class="author-img" src="${el.country}.png">${el.country}</img>
+	                <img class="author-img" src="resources/static/img/${el.country}.png"></img>
 	            </div>
 	            <hr>
 	            <div class="review-content">
@@ -513,7 +520,7 @@ function loadNewComment(resp) {
 				<p class="usertxt ub-word">${resp.CONTENT}</p><!-- ajax -->
 			</div>
 			<div class="fr">
-				<button type="button" class="btn btn-outline-danger btn-sm" onclick="deleteComment(this)">삭제</button> <!-- ajax -->
+				<button type="button" class="btn btn-outline-danger btn-sm" onclick="deleteComment(this,${resp.COMMENTID})">삭제</button> <!-- ajax -->
 			</div>
 		</div>
 	</li>`);

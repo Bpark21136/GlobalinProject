@@ -28,6 +28,6 @@
 	</select>
 	
 	<delete id="deletePoint">
-		DELETE FROM POINT WHERE USERID like CONCAT('%',#{userID},'%') AND POINTID = #{pointID}
+		DELETE FROM POINT WHERE USERID = #{userID} AND POINTID = #{pointID}
 	</delete>
 </mapper>

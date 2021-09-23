@@ -37,4 +37,16 @@ public class ReviewServiceImpl implements  ReviewService {
 		return rm.selectReviewById(rid);
 	}
 
+	@Override
+	public int deleteReview(long reviewID, String uid) {
+		// TODO Auto-generated method stub
+		return rm.deleteReview(reviewID,uid);
+	}
+
+	@Override
+	public long updateReview(ReviewDTO dto) {
+		// TODO Auto-generated method stub
+		return rm.updateReview(dto);
+	}
+
 }

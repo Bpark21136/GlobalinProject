@@ -12,4 +12,6 @@ public interface ReviewMapper {
 	public abstract Map<String, Object> selectReviewById(@Param (value="reviewID") long reviewID);
 	public abstract ArrayList<Map<String, Object>> getReviewList(@Param (value="pid")long pid,@Param (value="page") int page);
 	public abstract int getMaxPage(@Param(value = "pid") long pid);
+	public abstract int deleteReview(@Param(value = "rid") long reviewID, @Param(value = "uid") String uid);
+	public abstract long updateReview(ReviewDTO dto);
 }

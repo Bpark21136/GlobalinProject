@@ -77,6 +77,72 @@ public class ReviewController {
 		return modelAndView;
 	}
 	
+	@RequestMapping(value = "/load_review_update.do", method = RequestMethod.POST)
+	public ModelAndView loadReviewUpdate(@RequestParam(required = true, value = "rid") long rid,HttpSession session) {
+		logger.debug("review_update");
+
+		Map<String, Object> review = rs.selectReviewById(rid);
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("reviews/review_update");
+		modelAndView.addObject("REVIEWID",review.get("REVIEWID"));
+		modelAndView.addObject("TITLE",review.get("TITLE"));
+		modelAndView.addObject("PREVIEW",review.get("PREVIEW"));
+		modelAndView.addObject("CONTENT",review.get("CONTENT"));
+		modelAndView.addObject("DATE",review.get("DATE"));
+		modelAndView.addObject("USERID",review.get("USERID"));
+		modelAndView.addObject("COUNTRY",review.get("COUNTRY"));
+		modelAndView.addObject("POINTID",review.get("POINTID"));
+		if(session!= null) {
+			if(session.getAttribute("userId") != null)
+				modelAndView.addObject("CURRENTUSERID",session.getAttribute("userId"));
+		}
+		
+		ArrayList<Map<String,Object>> comments = cs.getCommentListByRid(rid);
+		modelAndView.addObject("comments",comments);
+		return modelAndView;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/review_delete.do", method=RequestMethod.POST)
+	public Map<String,Object> deleteReview(@RequestBody Map<String,String> map, HttpSession session) {
+		long reviewID = Long.parseLong(map.get("rid"));
+		logger.debug("" + reviewID);
+		
+		String uid = session.getAttribute("userId").toString();
+		if(uid == null)
+			return null;
+		
+		int code = rs.deleteReview(reviewID,uid);
+		if(code != 1)
+			return null;
+		
+		
+		Map<String,Object> ret = new HashMap<String, Object>();
+		ret.put("code", code);
+		return ret;
+		
+	}
+	@ResponseBody
+	@RequestMapping(value="/comment_delete.do", method=RequestMethod.POST)
+	public Map<String,Object> deleteComment(@RequestBody Map<String,String> map, HttpSession session) {
+		long commentID = Long.parseLong(map.get("cid"));
+		logger.debug("" + commentID);
+		
+		String uid = session.getAttribute("userId").toString();
+		if(uid == null)
+			return null;
+		
+		int code = cs.deleteReviewComment(commentID,uid);
+		if(code != 1)
+			return null;
+		
+		
+		Map<String,Object> ret = new HashMap<String, Object>();
+		ret.put("code", code);
+		return ret;
+		
+	}
+	
 	@ResponseBody
 	@RequestMapping(value="/review_create.do", method=RequestMethod.POST)
 	public Map<String,Object> reviewCreate(@RequestBody Map<String,String> map, HttpSession session) {
@@ -92,6 +158,28 @@ public class ReviewController {
 		dto.setUserID(uid);
 		long id = rs.insertReview(dto);
 		ret.put("id", id);
+		
+		return ret;	
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/review_update.do", method=RequestMethod.POST)
+	public Map<String,Object> reviewUpdate(@RequestBody Map<String,String> map, HttpSession session) {
+		
+		Map<String,Object> ret = new HashMap<String, Object>();
+		ReviewDTO dto = new ReviewDTO();
+		
+		dto.setTitle(map.get("title"));
+		dto.setPreview(map.get("preview"));
+		dto.setContent(map.get("content"));
+		dto.setReviewID(Long.parseLong(map.get("rid")));
+		String uid = session.getAttribute("userId").toString();
+		dto.setUserID(uid);
+		long code = rs.updateReview(dto);
+		ret.put("code", code);
+		if(code != 1) {
+			return null;
+		}
 		
 		return ret;	
 	}

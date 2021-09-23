@@ -11,4 +11,5 @@ public interface CommentMapper {
 	public abstract long insertComment(CommentDTO dto);
 	public abstract Map<String, Object> selectCommentById(@Param (value="commentID") long commentID);
 	public abstract ArrayList<Map<String, Object>> getCommentListByRid(@Param (value="reviewID") long reviewID);
+	public abstract int deleteReviewComment(@Param (value="cid") long commentID,@Param (value="uid")String uid);
 }

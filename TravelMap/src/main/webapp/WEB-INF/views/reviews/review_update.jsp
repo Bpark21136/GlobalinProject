@@ -15,32 +15,42 @@
 	.container .h2 .write-h2 {width: 300px; border-radius: 20px; text-align: center; font-size: 32px; color: var(--white-color); background-color: var(--faq-con-color);}
 	.container .mb-3 .note-editor.note-frame .note-editable {min-height: 50%; background-color: var(--white-color);}
 	.container .mb-3 .note-editor.note-frame .note-statusbar {background-color: var(--white-color);}
+	.background-white{
+	background-color:white;
+	border-radius: 20px;
+	padding-top:30px;
+	padding-bottom:30px;
+	padding-left:30px;
+	padding-right:30px;
+}
 </style>
 </head>
 	<body>
-		<div style="position:fixed;top:0px;right:0px;cursor:pointer;" onclick="toggleReviewForm(false);">
+		<div style="position:fixed;top:0px;right:0px;z-index:10;cursor:pointer;" onclick="toggleReviewForm(false);">
 			<i class="fa fa-window-close fa-fw fa-2x" aria-hidden="true"></i>
 		</div>
 		<article>
-			<div class="container" role="main">
+			<div class="container " role="main">
 				<div class="h2">
-					<h2 class="write-h2">게시글 쓰기</h2>
+					<h2 class="write-h2">게시글 수정</h2>
 				</div>
-				<form  onsubmit="return false;" name="form" id="form" role="form" method="post">
-					<div class="mb-3">
-						<label for="title"></label> 
-						<input type="text"
-							class="form-control" name="title" id="title"
-							placeholder="제목을 입력해 주세요">
-							
+				<div class=" background-white">
+					<form  onsubmit="return false;" name="form" id="form" role="form" method="post">
+						<div class="mb-3">
+							<label for="title"></label> 
+							<input type="text"
+								class="form-control" name="title" id="title"
+								placeholder="제목을 입력해 주세요" value="${TITLE}">
+								
+						</div>
+						<div class="mb-3">
+							<textarea id="summernote" name="content">${CONTENT}</textarea>
+						</div>
+					</form>
+					<div>
+						<button type="button" class="btn btn-danger" id="btnList" onclick="toggleReviewForm(false);">취소</button>
+						<button type="button" class="btn btn-success" id="btnSave" onclick="sendReviewUpdate($('#form'));">수정</button>
 					</div>
-					<div class="mb-3">
-						<textarea id="summernote" name="content"></textarea>
-					</div>
-				</form>
-				<div>
-					<button type="button" class="btn btn-danger" id="btnList" onclick="toggleReviewForm(false);">취소</button>
-					<button type="button" class="btn btn-success" id="btnSave" onclick="sendReviewForm($('#form'));">등록</button>
 				</div>
 			</div>
 		</article>
@@ -74,7 +84,7 @@
 			       });
 				}
 				
-				function sendReviewForm(frm) {
+				function sendReviewUpdate(frm) {
 					var title = $('#title').val();
 					var content = $("#summernote").summernote('code');
 					var preview = $($("#summernote").summernote("code")).text().substring(0,80);
@@ -88,25 +98,28 @@
 						return false;
 					}
 					
-					var sendData = {"title": title,"preview" :preview,"content" : content,"pid" : <%=request.getParameter("pid") %> };
+					var sendData = {"title": title,"preview" :preview,"content" : content,"rid" : ${REVIEWID}};
 					$.ajax({
-				        url:'review_create.do'
+				        url:'review_update.do'
 				        , method : 'POST'
 				        , data: JSON.stringify(sendData)
 				        ,contentType : 'application/json; charset=UTF-8'
 				        ,dataType : 'json'
 				        , success : function(resp) {
 							if(resp == null) {
-								alert("등록에 실패했습니다.");
+								alert("수정에 실패했습니다.");
 								return;
 							}
-							alert("등록 되었습니다.");
-							location.reload();
+							alert("수정 되었습니다.");
 							toggleReviewForm(false);
+							loadReview(review_selected_div,1);
+							$('#review-detail').load('review_detail.action',{"rid":${REVIEWID}});
+							$('#review-detail').css('display','block');
+							$('#review-form').css('display','none');
 							
 				        }
 					    , error : function(error) {
-							alert("등록에 실패했습니다.");
+							alert("수정에 실패했습니다.");
 						}
 				    });//ajax로 검색	
 				}

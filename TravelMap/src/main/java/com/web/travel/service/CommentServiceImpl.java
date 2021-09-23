@@ -44,6 +44,12 @@ public class CommentServiceImpl implements CommentService {
 		return cm.selectCommentById(cid);
 	}
 
+	@Override
+	public int deleteReviewComment(long commentID, String uid) {
+		// TODO Auto-generated method stub
+		return cm.deleteReviewComment(commentID,uid);
+	}
+
 	
 
 }

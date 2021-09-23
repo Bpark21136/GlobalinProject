@@ -50,7 +50,7 @@
 
 </head>
 <body>
-	<div style="position:fixed;top:0px;right:0px;cursor:pointer;" onclick="toggleReviewDetail(false)">
+	<div style="position:fixed;top:0px;right:0px;z-index:10;cursor:pointer;" onclick="toggleReviewDetail(false)">
 		<i class="fa fa-window-close fa-fw fa-2x" aria-hidden="true"></i>
 	</div>
 	<article class="padding">
@@ -77,8 +77,8 @@
 				<hr>
 				<div class="fl fr">
 					<%if(request.getAttribute("CURRENTUSERID") != null && ((String) request.getAttribute("CURRENTUSERID")).equals((String) request.getAttribute("USERID")))  {%>
-					<button class="btn btn-outline-secondary btn-sm">수정</button><!-- jsp(내가 쓴 글일 경우) -->
-					<button class="btn btn-outline-danger btn-sm">삭제</button><!-- jsp(내가 쓴 글일 경우) -->
+					<button class="btn btn-outline-secondary btn-sm" onclick="toggleReviewUpdate()">수정</button><!-- jsp(내가 쓴 글일 경우) -->
+					<button class="btn btn-outline-danger btn-sm" onclick="deleteReview()">삭제</button><!-- jsp(내가 쓴 글일 경우) -->
 					<%}%>
 				</div>
 			</div>
@@ -106,9 +106,11 @@
 									<div class="comment">
 										<p class="usertxt ub-word"><%=el.get("CONTENT").toString()%></p><!-- ajax -->
 									</div>
-									<%if(request.getAttribute("CURRENTUSERID") != null && ((String) request.getAttribute("CURRENTUSERID")).equals((String) el.get("USERID"))) { %>
+									<%if(request.getAttribute("CURRENTUSERID") != null 
+									 && (((String) request.getAttribute("CURRENTUSERID")).equals((String) request.getAttribute("USERID"))  || 
+											((String) request.getAttribute("CURRENTUSERID")).equals((String) el.get("USERID")))) {//내가 쓴 리뷰거나 내가 쓴 댓글일 경우 %>
 									<div class="fr">
-										<button type="button" class="btn btn-outline-danger btn-sm" onclick="deleteComment(this)">삭제</button> <!-- ajax -->
+										<button type="button" class="btn btn-outline-danger btn-sm" onclick="deleteComment(this,<%=el.get("COMMENTID").toString()%>)">삭제</button> <!-- ajax -->
 									</div>
 									<%}%>
 								</div>
@@ -137,6 +139,7 @@
 		</div>
 	</article>
 	<script type="text/javascript">
+		var commentNum =<%=comments.size() %> 
 		function insertComment() {
 			var content = $('textarea#comment_content').val();
 			if(content.trim() == '') {
@@ -159,7 +162,10 @@
 						return;
 					}//에러발생
 		           	alert('댓글이 등록되었습니다.');
+		           	$('textarea#comment_content').val('');
 					loadNewComment(resp);
+					commentNum++;
+					$('#comment_num').text(commentNum);
 					//새 댓글 문서에 추가
 		        }
 			   , error : function( error ) {
@@ -167,8 +173,54 @@
 				}
 		    });//ajax create
 		}
-		function deleteComment(el) {
-			
+		function deleteComment(el,cid) {
+			var sendData = {"cid": cid };
+			console.log('deleteReview sendData',sendData);
+			$.ajax({
+		        url:'comment_delete.do'
+		        , method : 'POST'
+		        , data: JSON.stringify(sendData)
+		        ,contentType : 'application/json; charset=UTF-8'
+		        ,dataType : 'json'
+		        , success : function(resp) {
+					if(resp == null) {
+						alert("삭제에 실패했습니다.");
+					}
+					alert("댓글이 삭제 되었습니다.");
+					$(el).closest("li").remove();
+					commentNum--;
+					$('#comment_num').text(commentNum);
+		        }
+			    , error : function(error) {
+					alert("삭제에 실패했습니다.");
+				}
+		    });//ajax로 검색
+		}
+		function deleteReview(){
+			var sendData = {"rid": ${REVIEWID}};
+			console.log('deleteReview sendData',sendData);
+			$.ajax({
+		        url:'review_delete.do'
+		        , method : 'POST'
+		        , data: JSON.stringify(sendData)
+		        ,contentType : 'application/json; charset=UTF-8'
+		        ,dataType : 'json'
+		        , success : function(resp) {
+					if(resp == null) {
+						alert("삭제에 실패했습니다.");
+					}
+					alert("리뷰가 삭제 되었습니다.");
+					location.reload();
+		        }
+			    , error : function(error) {
+					alert("삭제에 실패했습니다.");
+				}
+		    });//ajax로 검색
+		}
+		function toggleReviewUpdate() {
+			$('#review-form').load('load_review_update.do',{"rid":${REVIEWID}});
+			$('#review-form').css('display','block');
+			$('#review-detail').css('display','none');
 		}
 	</script>
 </body>
