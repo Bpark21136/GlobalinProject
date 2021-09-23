@@ -33,28 +33,30 @@
 	  <div id="sidebar-wrapper">
 	    <ul class="sidebar-nav">
 	      <li class="sidebar-brand">
-	        <a href="#">Ex</a>
+	        <a href="#">
+	        	<img src="<c:url value="/resources/static/img/logo2.png"/>">
+	        </a>
 	      </li>
 	      <li><a class="<%=menu ==  1 ?  "sel" : "" %>" onclick="menuClick(this.id)" id="menu1" >
-	      		<img src="<c:url value="/resources/static/img/sidebar_menu1.png"/>">
+	      		<img src="<c:url value="/resources/static/img/globe_icon.png"/>">
 	      		</a>
 	      		</li>
 	      <li><a class="<%=menu ==  2 ?  "sel" : "" %>" onclick="menuClick(this.id)" id="menu2" >
-	      		<img src="<c:url value="/resources/static/img/sidebar_menu2.png"/>">
+	      		<img src="<c:url value="/resources/static/img/list_icon.png"/>">
 	      		</a>
 	      		</li>
 	      <li><a class="<%=menu ==  3 ?  "sel" : "" %>" onclick="menuClick(this.id)" id="menu3" >
-	      		<img src="<c:url value="/resources/static/img/sidebar_menu3.png"/>">
+	      		<img src="<c:url value="/resources/static/img/faq_icon.png"/>">
 	      		</a>
 	      		</li>
           <li>
           <li><a class="<%=menu ==  4 ?  "sel" : "" %>" onclick="menuClick(this.id)" id="menu4" >
-	      		<img src="<c:url value="/resources/static/img/sidebar_menu3.png"/>">
+	      		<img src="<c:url value="/resources/static/img/user_icon.png"/>">
 	      		</a>
 	      		</li>
           <li>
           <li><a class="<%=menu ==  5 ?  "sel" : "" %>" onclick="menuClick(this.id)" id="menu5" >
-	      		<img src="<c:url value="/resources/static/img/sidebar_menu3.png"/>">
+	      		<img src="<c:url value="/resources/static/img/question_icon.png"/>">
 	      		</a>
 	      		</li>
           <li>
