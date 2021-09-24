@@ -32,7 +32,7 @@
 		<article>
 			<div class="container " role="main">
 				<div class="h2">
-					<h2 class="write-h2">게시글 수정</h2>
+					<h2 class="write-h2">리뷰 수정</h2>
 				</div>
 				<div class=" background-white">
 					<form  onsubmit="return false;" name="form" id="form" role="form" method="post">

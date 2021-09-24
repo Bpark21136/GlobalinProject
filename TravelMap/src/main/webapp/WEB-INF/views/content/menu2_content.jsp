@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page session="false" %>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.Map"%>
+<%ArrayList<Map<String,Object>> articles = (ArrayList<Map<String,Object>>) request.getAttribute("articles");%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,62 +28,74 @@
 	.bbsListLine *{color: var(--white-color); text-decoration: none;}
 	.bbsListTbody {background-color: var(--answer-back-color);}
 	.btn.btn-primary.pull-right{background-color: var(--faq-con-color); color: var(--white-color);}
+	.btn.btn-primary{background-color: var(--faq-con-color); color: var(--white-color);}
 </style>
 </head>
 <body>
-	
 	<div class="container">
 		<div class="bbs">
 		<div class="header">
 			<header class="bTitle">자유게시판</header>
 		</div>
 			<div align="right" class="bbsSearch">
-				<input class="form-control bbsSearch" type="search" placeholder="검색어를 입력하세요." value="" id="bbsSearch-input" onkeyup="enterKey();">
+				<input class="form-control bbsSearch" type="search" placeholder="검색어를 입력하세요." value="<%=request.getParameter("query")%>" id="bbsSearch-input" onkeyup="menu2_enterKey(1,$('#bbsSearch-input').val());">
 				<span class="input-group-append">
-	                <button class="btn bbsBtn-outline-secondary" type="submit" onclick="search();">
+	                <button class="btn bbsBtn-outline-secondary" type="submit" onclick="menu2_search(1,$('#bbsSearch-input').val());">
 	                    <i class="fa fa-search"></i>
 	                </button>
             	</span>
 			</div>
-			<div class="row">
+			<div style = "display:flex;justify-content: center;flex-direction :column;" class="row">
 				<table class="table table-striped" style="text-align: center; border: 0">
 					<thead class="bbsListThead">
 						<tr class="bbsListTitle">
-							<th class="listTNum" text-align: center;">번호</th>
-							<th class="listTTitle" text-align: center;">제목</th>
-							<th class="listTName" text-align: center;">작성자</th>
-							<th class="listTDate" text-align: center;">작성일</th>
+							<th class="listTNum">번호</th>
+							<th class="listTTitle">제목</th>
+							<th class="listTName">작성자</th>
+							<th class="listTDate">작성일</th>
 						</tr>
 					</thead>
 					<tbody class="bbsListTbody">
+						<%for(int i = 0; i < articles.size();i++) { %>
 						<tr class="bbsListLine">
-							<td class="listINum">1</td>
+							<td class="listINum"><%=articles.get(i).get("ARTICLEID")%></td>
 							<td class="listITitle">
-							<a class="viewLink" href="bbsView.jsp">안녕하세요</a></td>
-							<td class="listIName">홍길동</td>
-							<td class="listIDate">2021-09-21</td>
+							<a class="viewLink" href="" data-aid="<%=articles.get(i).get("ARTICLEID")%>"><%=articles.get(i).get("TITLE")%></a></td>
+							<td class="listIName"><%=articles.get(i).get("USERID")%></td>
+							<td class="listIDate"><%=articles.get(i).get("DATE")%></td>
 						</tr>
-						
-						<tr class="bbsListLine">
-							<td class="listINum">2</td>
-							<td class="listITitle">
-							<a class="viewLink" href="bbsView.jsp">안녕하세요</a></td>
-							<td class="listIName">홍길동</td>
-							<td class="listIDate">2021-09-21</td>
-						</tr>
-						
-						<tr class="bbsListLine">
-							<td class="listINum">3</td>
-							<td class="listITitle">
-							<a class="viewLink" href="bbsView.jsp">안녕하세요</a></td>
-							<td class="listIName">홍길동</td>
-							<td class="listIDate">2021-09-21</td>
-						</tr>
+						<%}%>
 					</tbody>
 				</table>
-				<button type="button" onclick="#" class="btn btn-primary pull-right">글쓰기</button>
+				<div style="display:flex;justify-content: center;align-items: center;">
+					<button style="width:36px;height:36px"class="btn btn-primary" onclick="articlePrev(<%=request.getParameter("page")%>)">
+			                   <i class="fa fa-angle-left"></i>
+			        </button>
+			        <span style="margin-left:10px;color: var(--white-color);" id="article-current-page">
+			        <%=request.getParameter("page")%>
+			        </span>
+			        <span style="color: var(--white-color);">
+			        /
+			        </span>
+			        <span style="margin-right:10px;color: var(--white-color);" id="article-max-page">
+			        ${maxPage}
+			        </span>
+			        <button style="width:36px;height:36px"class="btn btn-primary" onclick="articleNext(<%=request.getParameter("page")%>)">
+			                   <i class="fa fa-angle-right"></i>
+			        </button>
+				</div>
+				<%if(request.getAttribute("userId") != null) { %>
+				<div>
+				<button  type="button" class="btn btn-primary pull-right" onclick="writeButtonClick()">글쓰기</button>
+				</div>
+				<%}%>
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript">
+	viewDetail();
+	
+	
+	</script>
 </body>
 </html>

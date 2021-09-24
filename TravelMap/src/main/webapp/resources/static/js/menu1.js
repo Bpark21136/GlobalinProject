@@ -513,7 +513,7 @@ function loadNewComment(resp) {
 			<div class="comment_content">
 			<div class="fl">
 				<span class="nickname"><em>${resp.USERID}</em></span><!-- ajax -->
-				<span class="country"><img src="${resp.COUNTRY}.png"></span><!-- ajax -->
+				<span class="country"><img src="resources/static/img/${resp.COUNTRY}.png"></span><!-- ajax -->
 				<span class="date_time">${resp.DATE}</span><!-- ajax -->
 			</div>
 			<div class="comment">

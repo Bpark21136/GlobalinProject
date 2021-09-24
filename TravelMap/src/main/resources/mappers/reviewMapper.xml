@@ -31,14 +31,25 @@
 		FROM REVIEW R INNER JOIN USER U ON R.USERID = U.USERID WHERE REVIEWID = #{reviewID}
 	</select>
 	
+	
 	<select id="getReviewList" resultType="hashMap">
 		SELECT REVIEWID,TITLE,PREVIEW,R.USERID,COUNTRY,POINTID
 		FROM REVIEW R INNER JOIN USER U ON R.USERID = U.USERID WHERE POINTID = #{pid}
 		ORDER BY REVIEWID DESC LIMIT #{page}, 5
 	</select>
 	
+	<select id="getReviewListByUid" resultType="hashMap">
+		SELECT REVIEWID,TITLE,PREVIEW,R.USERID,COUNTRY,POINTID,DATE
+		FROM REVIEW R INNER JOIN USER U ON R.USERID = U.USERID WHERE R.USERID = #{uid}
+		ORDER BY REVIEWID DESC LIMIT #{page}, 10
+	</select>
+
 	<select id="getMaxPage" resultType="int">
 		SELECT CEILING(COUNT(*)/5) FROM REVIEW WHERE POINTID = #{pid}
+	</select>
+	
+	<select id="getMaxPageUid" resultType="int">
+		SELECT CEILING(COUNT(*)/10) FROM REVIEW WHERE USERID = #{uid}
 	</select>
 	
 	<delete id="deleteReview">
