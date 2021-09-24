@@ -1,4 +1,4 @@
-  package com.web.travel;
+package com.web.travel;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.web.travel.dto.accountDTO;
+import com.web.travel.modelDAO.SecurityConfig;
 
 @Controller
 public class MainController {
@@ -51,9 +52,11 @@ public class MainController {
 		
 		accountDTO to = new accountDTO();
 		
+		SecurityConfig enc = new SecurityConfig();
+		
 		String userId = request.getParameter("id"); 
 		// 패스워드 암호화 필요
-		String password = request.getParameter("password");
+		String password = enc.encryptionMain(request.getParameter("password"));
 			
 		to.setUserId(userId);
 		to.setHashedPassword(password);
@@ -88,10 +91,11 @@ public class MainController {
 	public ModelAndView sign_upRequest(HttpServletRequest request) {
 
 		accountDTO to = new accountDTO();
+
+		SecurityConfig enc = new SecurityConfig();
 		
-		String userId = request.getParameter("userId"); 
-		/* 패스워드 암호화 필요*/
-		String password = request.getParameter("password");
+		String userId = request.getParameter("userId");
+		String password = enc.encryptionMain(request.getParameter("password"));
 		String email = request.getParameter("email");
 		String country = request.getParameter("country");
 		
