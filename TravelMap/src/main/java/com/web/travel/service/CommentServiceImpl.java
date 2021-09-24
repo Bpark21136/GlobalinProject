@@ -29,7 +29,7 @@ public class CommentServiceImpl implements CommentService {
 	@Override
 	public ArrayList<Map<String, Object>> getCommentListByAid(long aid) {
 		// TODO Auto-generated method stub
-		return null;
+		return cm.getCommentListByAid(aid);
 	}
 
 	@Override
@@ -48,6 +48,12 @@ public class CommentServiceImpl implements CommentService {
 	public int deleteReviewComment(long commentID, String uid) {
 		// TODO Auto-generated method stub
 		return cm.deleteReviewComment(commentID,uid);
+	}
+
+	@Override
+	public int deleteArticleComment(long commentID, String uid) {
+		// TODO Auto-generated method stub
+		return cm.deleteArticleComment(commentID, uid);
 	}
 
 	

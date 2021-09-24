@@ -26,13 +26,13 @@
 </style>
 </head>
 	<body>
-		<div style="position:fixed;top:0px;right:0px;z-index:10;cursor:pointer;" onclick="toggleReviewForm(false);">
+		<div style="position:fixed;top:0px;right:0px;z-index:10;cursor:pointer;" onclick="location.reload();">
 			<i class="fa fa-window-close fa-fw fa-2x" aria-hidden="true"></i>
 		</div>
 		<article>
 			<div class="container " role="main">
 				<div class="h2">
-					<h2 class="write-h2">리뷰 수정</h2>
+					<h2 class="write-h2">게시글 수정</h2>
 				</div>
 				<div class=" background-white">
 					<form  onsubmit="return false;" name="form" id="form" role="form" method="post">
@@ -48,8 +48,8 @@
 						</div>
 					</form>
 					<div>
-						<button type="button" class="btn btn-danger" id="btnList" onclick="toggleReviewForm(false);">취소</button>
-						<button type="button" class="btn btn-success" id="btnSave" onclick="sendReviewUpdate($('#form'));">수정</button>
+						<button type="button" class="btn btn-danger" id="btnList" onclick="window.history.back();">취소</button>
+						<button type="button" class="btn btn-success" id="btnSave" onclick="sendArticleForm($('#form'));">수정</button>
 					</div>
 				</div>
 			</div>
@@ -84,10 +84,9 @@
 			       });
 				}
 				
-				function sendReviewUpdate(frm) {
+				function sendArticleForm(frm) {
 					var title = $('#title').val();
 					var content = $("#summernote").summernote('code');
-					var preview = $($("#summernote").summernote("code")).text().substring(0,80);
 					if (title.trim() == ''){
 						alert("제목을 입력해주세요");
 						return false;
@@ -98,9 +97,9 @@
 						return false;
 					}
 					
-					var sendData = {"title": title,"preview" :preview,"content" : content,"rid" : ${REVIEWID}};
+					var sendData = {"title": title,"content" : content,"aid" : ${ARTICLEID}};
 					$.ajax({
-				        url:'review_update.do'
+				        url:'article_update.do'
 				        , method : 'POST'
 				        , data: JSON.stringify(sendData)
 				        ,contentType : 'application/json; charset=UTF-8'
@@ -111,11 +110,8 @@
 								return;
 							}
 							alert("수정 되었습니다.");
-							toggleReviewForm(false);
-							loadReview(review_selected_div,1);
-							$('#review-detail').load('review_detail.action',{"rid":${REVIEWID}});
-							$('#review-detail').css('display','block');
-							$('#review-form').css('display','none');
+							//history.pushState('','', '?menu=' + menu +'&&' + 'view=bbsView&&' + 'aid='+ ${ARTICLEID});
+							loadbbsView(${ARTICLEID});
 							
 				        }
 					    , error : function(error) {

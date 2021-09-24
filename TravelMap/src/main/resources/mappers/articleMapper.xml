@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.travel.mapper.ArticleMapper">
+	<insert id="insertArticle" parameterType="com.web.travel.dto.ArticleDTO" useGeneratedKeys="true" keyProperty="articleID">
+		insert into article ( 
+			title, 
+			content,
+			userid
+		) 
+		values (
+			#{title}, 
+			#{content}, 
+			#{userID}
+		)
+	</insert>
+	<update id="updateArticle" parameterType="com.web.travel.dto.ArticleDTO">
+		update article set 
+			title = #{title}, 
+			content = #{content},
+			date = default(date) WHERE USERID = #{userID} AND ARTICLEID = #{articleID}
+	</update>
+	
+	<select id="selectArticleById" resultType="hashMap">
+		SELECT ARTICLEID,TITLE,CONTENT,DATE,R.USERID,COUNTRY
+		FROM ARTICLE R INNER JOIN USER U ON R.USERID = U.USERID WHERE ARTICLEID = #{articleID}
+	</select>
+	
+	<select id="getArticleList" resultType="hashMap">
+		SELECT ARTICLEID,TITLE,USERID,DATE
+		FROM ARTICLE WHERE TITLE like CONCAT('%',#{query},'%')
+		ORDER BY DATE DESC LIMIT #{page}, 10
+	</select>
+	
+	<select id="getMaxPage" resultType="int">
+		SELECT CEILING(COUNT(*)/10) FROM ARTICLE WHERE TITLE like CONCAT('%',#{query},'%')
+	</select>
+	
+	<delete id="deleteArticle">
+		DELETE FROM ARTICLE WHERE USERID = #{uid} AND ARTICLEID = #{aid}
+	</delete>
+</mapper>

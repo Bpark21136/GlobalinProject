@@ -15,41 +15,110 @@
 	.container .h2 .write-h2 {width: 300px; border-radius: 20px; text-align: center; font-size: 32px; color: var(--white-color); background-color: var(--faq-con-color);}
 	.container .mb-3 .note-editor.note-frame .note-editable {min-height: 50%; background-color: var(--white-color);}
 	.container .mb-3 .note-editor.note-frame .note-statusbar {background-color: var(--white-color);}
+	.background-white{
+	background-color:white;
+	border-radius: 20px;
+	padding-top:30px;
+	padding-bottom:30px;
+	padding-left:30px;
+	padding-right:30px;
+}
 </style>
 </head>
 	<body>
-		<div style="position:fixed;top:0px;right:0px;cursor:pointer;" onclick="toggleReviewForm(false);">
+		<div style="position:fixed;top:0px;right:0px;z-index:10;cursor:pointer;" onclick="location.reload();">
 			<i class="fa fa-window-close fa-fw fa-2x" aria-hidden="true"></i>
 		</div>
 		<article>
-			<div class="container" role="main">
+			<div class="container " role="main">
 				<div class="h2">
 					<h2 class="write-h2">게시글 쓰기</h2>
 				</div>
-				<form name="form" id="form" role="form" method="post">
-					<div class="mb-3">
-						<label for="title"></label> 
-						<input type="text"
-							class="form-control" name="title" id="title"
-							placeholder="제목을 입력해 주세요">
-							
+				<div class=" background-white">
+					<form  onsubmit="return false;" name="form" id="form" role="form" method="post">
+						<div class="mb-3">
+							<label for="title"></label> 
+							<input type="text"
+								class="form-control" name="title" id="title"
+								placeholder="제목을 입력해 주세요">
+								
+						</div>
+						<div class="mb-3">
+							<textarea id="summernote" name="content"></textarea>
+						</div>
+					</form>
+					<div>
+						<button type="button" class="btn btn-danger" id="btnList" onclick="window.history.back();">취소</button>
+						<button type="button" class="btn btn-success" id="btnSave" onclick="sendArticleForm($('#form'));">등록</button>
 					</div>
-					<div class="mb-3">
-						<textarea id="summernote"></textarea>
-					</div>
-				</form>
-				<div>
-					<button type="button" class="btn btn-danger" id="btnList" onclick="toggleReviewForm(false);">취소</button>
-					<button type="button" class="btn btn-success" id="btnSave" onclick="sendReviewForm();">등록</button>
 				</div>
 			</div>
 		</article>
 		<script type="text/javascript">
 				$(document).ready(function() {
 				  $('#summernote').summernote({  
+					  callbacks: {
+						  onImageUpload: function(files, editor, welEditable) {
+						              for (var i = files.length - 1; i >= 0; i--) {
+						               sendFile(files[i], this);
+						              }
+						          }
+						  }
+						  });
 				  });
-				});
 				//summernote 설정
+				function sendFile(file, el) {
+				   var form_data = new FormData();
+			       form_data.append('file', file);
+			       $.ajax({
+			         data: form_data,
+			         type: "POST",
+			         url: './upload_image.do',
+			         cache: false,
+			         contentType: false,
+			         enctype: 'multipart/form-data',
+			         processData: false,
+			         success: function(img_name) {
+			           $(el).summernote('editor.insertImage', img_name);
+			         }
+			       });
+				}
+				
+				function sendArticleForm(frm) {
+					var title = $('#title').val();
+					var content = $("#summernote").summernote('code');
+					if (title.trim() == ''){
+						alert("제목을 입력해주세요");
+						return false;
+					}
+					
+					if (content.trim() == ''){
+						alert("내용을 입력해주세요");
+						return false;
+					}
+					
+					var sendData = {"title": title,"content" : content};
+					$.ajax({
+				        url:'article_create.do'
+				        , method : 'POST'
+				        , data: JSON.stringify(sendData)
+				        ,contentType : 'application/json; charset=UTF-8'
+				        ,dataType : 'json'
+				        , success : function(resp) {
+							if(resp == null) {
+								alert("등록에 실패했습니다.");
+								return;
+							}
+							alert("등록 되었습니다.");
+							history.pushState('','', '?menu=' + menu +'&&' + 'view=bbsView&&' + 'aid='+ resp.aid);
+							loadbbsView(resp.aid);
+							
+				        }
+					    , error : function(error) {
+							alert("등록에 실패했습니다.");
+						}
+				    });//ajax로 검색	
+				}
 		</script>
 	</body>
 </html>

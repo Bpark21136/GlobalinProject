@@ -25,12 +25,27 @@
 	<select id="getCommentListByRid" resultType="hashMap">
 		select COMMENTID, C.USERID,COUNTRY,DATE,CONTENT from COMMENT C inner join USER U on C.userID = U.userID where reviewID = #{reviewID}
 	</select>
+	<select id="getCommentListByAid" resultType="hashMap">
+		select COMMENTID, C.USERID,COUNTRY,DATE,CONTENT from COMMENT C inner join USER U on C.userID = U.userID where ARTICLEID = #{articleID}
+	</select>
 	
 	<delete id="deleteReviewComment">
 		DELETE FROM COMMENT WHERE 
 			(USERID = #{uid} OR 
 				#{uid} = (SELECT USERID FROM REVIEW WHERE 
 					REVIEWID = (SELECT REVIEWID FROM COMMENT WHERE 
+						COMMENTID = #{cid})
+				 		   )
+			 ) AND COMMENTID = #{cid}
+			 <!-- 내가 리뷰,게시글 작성자이거나 댓글 작성자라면 삭제 -->
+			 <!-- RID는 필요할 줄 알고 보냈는데 필요없었음 -->
+	</delete>
+	
+	<delete id="deleteArticleComment">
+		DELETE FROM COMMENT WHERE 
+			(USERID = #{uid} OR 
+				#{uid} = (SELECT USERID FROM ARTICLE WHERE 
+					ARTICLEID = (SELECT ARTICLEID FROM COMMENT WHERE 
 						COMMENTID = #{cid})
 				 		   )
 			 ) AND COMMENTID = #{cid}

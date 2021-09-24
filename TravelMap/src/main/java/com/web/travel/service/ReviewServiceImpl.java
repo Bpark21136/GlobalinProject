@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.web.travel.dto.ArticleDTO;
 import com.web.travel.dto.PointDTO;
 import com.web.travel.dto.ReviewDTO;
 import com.web.travel.mapper.ReviewMapper;
@@ -48,5 +49,6 @@ public class ReviewServiceImpl implements  ReviewService {
 		// TODO Auto-generated method stub
 		return rm.updateReview(dto);
 	}
+
 
 }

@@ -89,6 +89,9 @@
 	  </div>
 	</div>
 		<!-- /.container -->
+	<script src="<c:url value="/resources/static/js/menu1.js"/>"></script>
+	<script src="<c:url value="/resources/static/js/menu2.js"/>"></script>
+	<script src="<c:url value="/resources/static/js/menu4.js"/>"></script>
 	<script type="text/javascript">
 		var logined = <%=(String)request.getAttribute("userId") != null  ? "true" : "false" %>;
 		var uid = <%=(String)request.getAttribute("userId") != null  ? "'" + (String)request.getAttribute("userId") + "'" : "null" %>;
@@ -98,14 +101,14 @@
 		console.log('menu',menu);
 		window.onpopstate = function(event) {
 			const url = new URL(window.location.href);
-			console.log('popstate',url);
 			const urlParams = url.searchParams;
+			console.log('popstate',url);
 			console.log('popstate',urlParams);
 			console.log('popstate',menu,' ',urlParams.get('menu'));
 			if(urlParams.get('menu') == undefined && menu == 1) {
 				return;
 			}
-			else if(menu == urlParams.get('menu')) {
+			else if(menu == urlParams.get('menu') && menu !=2 && menu != 4) {
 				console.log('menu == urlParams.get(menu)');
 				return;
 			}
@@ -117,6 +120,7 @@
 			}
 	        changeSel('menu' + menu);
 	        loadMenu('menu' + menu);
+	       
 	      };
 		function menuClick(id) {
 			const id_val = parseInt(id.slice(4));
@@ -142,9 +146,38 @@
 				document.getElementById(id).classList.toggle('sel');
 		}
 		function loadMenu(id) {
+			const url = new URL(window.location.href);
+			const urlParams = url.searchParams;
 			console.log(id.slice(4));
-			$('#sidebar-content-wrapper').load('content.action?id=' + id);
-			$('#page-content-wrapper').load('sidebar.action?id=' + id);
+			 if(menu == 2) {
+			        if(urlParams.get('view') == null) {
+			        	loadPage(urlParams.get('page'),urlParams.get('query'));
+			        	//자유게시판
+			        } else if(urlParams.get('view') == 'write'){
+			        	loadWrite();//게시글 쓰기
+			        } else if(urlParams.get('view') == 'bbsView') {
+			        	loadbbsView(urlParams.get('aid'));
+			        	//게시글 보기
+			        } else if(urlParams.get('view') == 'update'){
+			        	loadUpdate(urlParams.get('aid'));//게시글 수정
+			        }
+	        } else if(menu == 4) {
+	        	if(urlParams.get('view') == null) {
+					$('#sidebar-content-wrapper').load('content.action?id=' + id);
+					$('#page-content-wrapper').load('sidebar.action?id=' + id);
+		        	//마이페이지
+	        	}
+	        	if (urlParams.get('view') == 'change') {
+		        	//회원정보 수정
+		        } else if(urlParams.get('view') == 'mygeshigle') {
+		        	//내 게시글
+		        } else if(urlParams.get('view') == 'myReview') {
+		        	//내 리뷰
+		        }
+	        } else {
+				$('#sidebar-content-wrapper').load('content.action?id=' + id);
+				$('#page-content-wrapper').load('sidebar.action?id=' + id);
+	        }
 			
 			if(id.slice(4) != 1) { // 사이드 바 안쓰는 경우
 				$('#shirinkable-layout').css("display","none");
@@ -160,6 +193,6 @@
 		}
 
 	</script>
-	<script src="<c:url value="/resources/static/js/menu1.js"/>"></script>
+
 </body>
 </html>
