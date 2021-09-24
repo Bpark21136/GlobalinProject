@@ -100,7 +100,7 @@
 								<div class="comment_content">
 									<div class="fl">
 										<span class="nickname"><em><%=el.get("USERID").toString()%></em></span><!-- ajax -->
-										<span class="country"><img src="<%=el.get("COUNTRY").toString()%>.png"></span><!-- ajax -->
+										<span class="country"><img src="resources/static/img/<%=el.get("COUNTRY").toString()%>.png"></span><!-- ajax -->
 										<span class="date_time"><%=el.get("DATE").toString() %></span><!-- ajax -->
 									</div>
 									<div class="comment">
