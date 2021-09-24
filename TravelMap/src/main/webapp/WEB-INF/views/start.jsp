@@ -60,7 +60,7 @@
           <%if(request.getAttribute("userId") == null) { %>
           	<button type="button" onclick="location.href='./login.action'" class="btn btn-secondary" id="btn" >로그인</button></li>
           <%} else if(request.getAttribute("userId") != null) {%>
-          	<button type="button" onclick="location.href='./logout.action'" class="btn btn-secondary" id="btn" >로그아웃</button></li>
+          	<button type="button" style="width: 70%; font-size: 0.8em; padding: 10px 0px;"  onclick="location.href='./logout.action'" class="btn btn-secondary" id="btn" >로그아웃</button></li>
           <%} %>
           <li><br/><div id="google_translate_element"></div>
 			<script type="text/javascript">
