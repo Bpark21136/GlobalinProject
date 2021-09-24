@@ -33,8 +33,7 @@
 
 <ol>
     <div class="id">ID : </div>
-    <div class="pwd">PWD : </div>
-    <div class="name"> 이름 : </div>
+    <div class="email">e-mail : </div>
     <div class="국적">국적 : </div>
 
 

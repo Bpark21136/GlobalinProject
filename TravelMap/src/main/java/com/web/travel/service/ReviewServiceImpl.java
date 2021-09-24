@@ -50,5 +50,17 @@ public class ReviewServiceImpl implements  ReviewService {
 		return rm.updateReview(dto);
 	}
 
+	@Override
+	public ArrayList<Map<String, Object>> getReviewListByUid(String userId,int page) {
+		// TODO Auto-generated method stub
+		return rm.getReviewListByUid(userId,(page-1)*10);
+	}
+
+	@Override
+	public int getMaxPage(String userId) {
+		// TODO Auto-generated method stub
+		return rm.getMaxPageUid(userId);
+	}
+
 
 }

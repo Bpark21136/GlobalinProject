@@ -14,4 +14,6 @@ public interface ArticleMapper {
 	public abstract int getMaxPage(@Param(value = "query") String query);
 	public abstract int deleteArticle(@Param(value = "aid") long articleID, @Param(value = "uid") String uid);
 	public abstract long updateArticle(ArticleDTO dto);
+	public abstract int getMaxPageByUid(@Param(value = "uid")String uid);
+	public abstract ArrayList<Map<String, Object>> getArticleListByUid(@Param(value = "uid")String userId,@Param (value="page") int page);
 }

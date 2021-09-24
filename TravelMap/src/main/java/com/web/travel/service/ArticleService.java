@@ -12,7 +12,9 @@ public interface ArticleService {
 	long insertArticle(ArticleDTO dto);
 	Map<String, Object> selectArticleById(long aid);
 	int getMaxPage(String query);
+	int getMaxPageByUid(String uid);
 	int deleteArticle(long articleID, String uid);
 	long updateArticle(ArticleDTO dto);
+	ArrayList<Map<String, Object>> getArticleListByUid(String userId, int page);
 
 }

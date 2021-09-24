@@ -31,9 +31,18 @@
 		FROM ARTICLE WHERE TITLE like CONCAT('%',#{query},'%')
 		ORDER BY DATE DESC LIMIT #{page}, 10
 	</select>
+	<select id="getArticleListByUid" resultType="hashMap">
+		SELECT ARTICLEID,TITLE,USERID,DATE
+		FROM ARTICLE WHERE USERID = #{uid}
+		ORDER BY DATE DESC LIMIT #{page}, 10
+	</select>
 	
 	<select id="getMaxPage" resultType="int">
 		SELECT CEILING(COUNT(*)/10) FROM ARTICLE WHERE TITLE like CONCAT('%',#{query},'%')
+	</select>
+	
+	<select id="getMaxPageByUid" resultType="int">
+		SELECT CEILING(COUNT(*)/10) FROM ARTICLE WHERE USERID = #{uid}
 	</select>
 	
 	<delete id="deleteArticle">

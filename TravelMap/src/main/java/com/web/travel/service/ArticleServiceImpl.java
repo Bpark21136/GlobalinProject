@@ -55,4 +55,16 @@ public class ArticleServiceImpl implements ArticleService{
 		return am.updateArticle(dto);
 	}
 
+	@Override
+	public int getMaxPageByUid(String uid) {
+		// TODO Auto-generated method stub
+		return am.getMaxPageByUid(uid);
+	}
+
+	@Override
+	public ArrayList<Map<String, Object>> getArticleListByUid(String userId, int page) {
+		// TODO Auto-generated method stub
+		return am.getArticleListByUid(userId, (page- 1) * 10);
+	}
+
 }

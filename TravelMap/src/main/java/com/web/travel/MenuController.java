@@ -84,7 +84,7 @@ public class MenuController {
 		String uid = session.getAttribute("userId").toString();
 		dto.setUserID(uid);
 		long id = as.insertArticle(dto);
-		ret.put("id", id);
+		ret.put("aid", id);
 		
 		return ret;	
 	}

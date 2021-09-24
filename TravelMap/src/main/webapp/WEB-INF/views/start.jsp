@@ -57,11 +57,6 @@
 	      		</li>
           <li>
           <% }%>
-          <li><a class="<%=menu ==  5 ?  "sel" : "" %>" onclick="menuClick(this.id)" id="menu5" >
-	      		<img src="<c:url value="/resources/static/img/question_icon.png"/>">
-	      		</a>
-	      		</li>
-          <li>
           <%if(request.getAttribute("userId") == null) { %>
           	<button type="button" onclick="location.href='./login.action'" class="btn btn-secondary" id="btn" >로그인</button></li>
           <%} else if(request.getAttribute("userId") != null) {%>
@@ -163,16 +158,21 @@
 			        }
 	        } else if(menu == 4) {
 	        	if(urlParams.get('view') == null) {
-					$('#sidebar-content-wrapper').load('content.action?id=' + id);
-					$('#page-content-wrapper').load('sidebar.action?id=' + id);
+					$('#page-content-wrapper').load('mypage.do');
 		        	//마이페이지
 	        	}
 	        	if (urlParams.get('view') == 'change') {
 		        	//회원정보 수정
 		        } else if(urlParams.get('view') == 'mygeshigle') {
 		        	//내 게시글
-		        } else if(urlParams.get('view') == 'myReview') {
-		        	//내 리뷰
+		        } else if(urlParams.get('view') == 'my_reviews') {
+		        	loadReviewPage(urlParams.get('page'));//내 리뷰
+		        } else if(urlParams.get('view') == 'my_reviews_detail') {
+		        	loadmyReviewsDetail(urlParams.get('rid'));
+		        } else if(urlParams.get('view') == 'my_articles') {
+		        	loadMyArticlesPage(urlParams.get('page'));//내 리뷰
+		        } else if(urlParams.get('view') == 'bbsView') {
+		        	loadbbsView(urlParams.get('aid'));
 		        }
 	        } else {
 				$('#sidebar-content-wrapper').load('content.action?id=' + id);

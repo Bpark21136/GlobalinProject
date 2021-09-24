@@ -13,5 +13,8 @@ public interface ReviewService {
 	public abstract Map<String, Object> selectReviewById(long rid);
 	public abstract int deleteReview(long reviewID, String uid);
 	public abstract long updateReview(ReviewDTO dto);
+	public abstract ArrayList<Map<String, Object>> getReviewListByUid(String userId,int page);
+
+	public abstract int getMaxPage(String userId);
 
 }

@@ -36,14 +36,14 @@
 					</header>
 					
 					<ol class="old">
-					    <div class="id">ID : </div>
-					    <div class="pwd">PW : </div>
-					    <div class="name"> 이름 : </div>
-					    <div class="국적">국적 : </div>
+					    <div class="id">ID : ${userId}</div>
+					    <div class="email">E-mail : ${email}</div>
+					    <div class="국적">국적 : ${country}</div>
 					
 					
-						<button class="my-fixed-btn" href="Change.html">회원정보 수정</button>
-						<button class="my-bbs-btn" href="MyGyeshigle.html">내 게시글</button>
+						<button class="my-fixed-btn" onclick="">회원정보 수정</button>
+						<button class="my-bbs-btn" onclick="myReviewButtonClick(1)">내 리뷰</button>
+						<button class="my-bbs-btn" onclick="myArticlesButtonClick(1)">내 게시글</button>
 					</ol>
 				</fieldset>
 			</div>
