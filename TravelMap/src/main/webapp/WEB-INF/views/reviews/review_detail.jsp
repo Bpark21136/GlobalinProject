@@ -63,7 +63,7 @@
 					<div class="writer">
 						<div class="fl">
 							<span class="nickname"><em>${USERID}</em></span>
-							<span class="country"><img src="${COUNTRY}.png"></img></span>
+							<span class="country"><img src="resources/static/img/${COUNTRY}.png"></img></span>
 							<span>${DATE}</span>
 						</div>
 					</div>
