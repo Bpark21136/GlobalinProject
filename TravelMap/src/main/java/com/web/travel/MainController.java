@@ -54,8 +54,7 @@ public class MainController {
 		
 		SecurityConfig enc = new SecurityConfig();
 		
-		String userId = request.getParameter("id"); 
-		// 패스워드 암호화 필요
+		String userId = request.getParameter("id");
 		String password = enc.encryptionMain(request.getParameter("password"));
 			
 		to.setUserId(userId);
