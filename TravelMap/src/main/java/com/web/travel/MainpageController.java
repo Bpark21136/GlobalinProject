@@ -61,7 +61,7 @@ public class MainpageController {
 		logger.debug(query);
 		logger.debug("" + page);
 		if(query == null || query.trim().isEmpty())
-			return null;
+			return ps.searchPoint("" , page);
 		
 		return ps.searchPoint(query.trim() , page);	
 	}

@@ -18,9 +18,30 @@
 			#{pointID}
 		)
 	</insert>
+	<update id="updateReview" parameterType="com.web.travel.dto.ReviewDTO">
+		update review set 
+			title = #{title}, 
+			preview = #{preview}, 
+			content = #{content},
+			date = default(date) WHERE USERID = #{userID} AND REVIEWID = #{reviewID}
+	</update>
 	
-	<select id="selectReviewById" resultType="com.web.travel.dto.ReviewDTO">
-		SELECT * FROM REVIEW WHERE REVIEWID = #{reviewID}
+	<select id="selectReviewById" resultType="hashMap">
+		SELECT REVIEWID,TITLE,PREVIEW,CONTENT,DATE,R.USERID,COUNTRY,POINTID
+		FROM REVIEW R INNER JOIN USER U ON R.USERID = U.USERID WHERE REVIEWID = #{reviewID}
 	</select>
-
+	
+	<select id="getReviewList" resultType="hashMap">
+		SELECT REVIEWID,TITLE,PREVIEW,R.USERID,COUNTRY,POINTID
+		FROM REVIEW R INNER JOIN USER U ON R.USERID = U.USERID WHERE POINTID = #{pid}
+		ORDER BY REVIEWID DESC LIMIT #{page}, 5
+	</select>
+	
+	<select id="getMaxPage" resultType="int">
+		SELECT CEILING(COUNT(*)/5) FROM REVIEW WHERE POINTID = #{pid}
+	</select>
+	
+	<delete id="deleteReview">
+		DELETE FROM REVIEW WHERE USERID = #{uid} AND REVIEWID = #{rid}
+	</delete>
 </mapper>

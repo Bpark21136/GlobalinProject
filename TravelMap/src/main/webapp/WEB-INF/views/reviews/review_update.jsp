@@ -32,7 +32,7 @@
 		<article>
 			<div class="container " role="main">
 				<div class="h2">
-					<h2 class="write-h2">게시글 쓰기</h2>
+					<h2 class="write-h2">게시글 수정</h2>
 				</div>
 				<div class=" background-white">
 					<form  onsubmit="return false;" name="form" id="form" role="form" method="post">
@@ -40,16 +40,16 @@
 							<label for="title"></label> 
 							<input type="text"
 								class="form-control" name="title" id="title"
-								placeholder="제목을 입력해 주세요">
+								placeholder="제목을 입력해 주세요" value="${TITLE}">
 								
 						</div>
 						<div class="mb-3">
-							<textarea id="summernote" name="content"></textarea>
+							<textarea id="summernote" name="content">${CONTENT}</textarea>
 						</div>
 					</form>
 					<div>
 						<button type="button" class="btn btn-danger" id="btnList" onclick="toggleReviewForm(false);">취소</button>
-						<button type="button" class="btn btn-success" id="btnSave" onclick="sendReviewForm($('#form'));">등록</button>
+						<button type="button" class="btn btn-success" id="btnSave" onclick="sendReviewUpdate($('#form'));">수정</button>
 					</div>
 				</div>
 			</div>
@@ -84,7 +84,7 @@
 			       });
 				}
 				
-				function sendReviewForm(frm) {
+				function sendReviewUpdate(frm) {
 					var title = $('#title').val();
 					var content = $("#summernote").summernote('code');
 					var preview = $($("#summernote").summernote("code")).text().substring(0,80);
@@ -98,28 +98,28 @@
 						return false;
 					}
 					
-					var sendData = {"title": title,"preview" :preview,"content" : content,"pid" : <%=request.getParameter("pid") %> };
+					var sendData = {"title": title,"preview" :preview,"content" : content,"rid" : ${REVIEWID}};
 					$.ajax({
-				        url:'review_create.do'
+				        url:'review_update.do'
 				        , method : 'POST'
 				        , data: JSON.stringify(sendData)
 				        ,contentType : 'application/json; charset=UTF-8'
 				        ,dataType : 'json'
 				        , success : function(resp) {
 							if(resp == null) {
-								alert("등록에 실패했습니다.");
+								alert("수정에 실패했습니다.");
 								return;
 							}
-							alert("등록 되었습니다.");
+							alert("수정 되었습니다.");
 							toggleReviewForm(false);
 							loadReview(review_selected_div,1);
-							$('#review-detail').load('review_detail.action',{"rid":resp.id});
+							$('#review-detail').load('review_detail.action',{"rid":${REVIEWID}});
 							$('#review-detail').css('display','block');
 							$('#review-form').css('display','none');
 							
 				        }
 					    , error : function(error) {
-							alert("등록에 실패했습니다.");
+							alert("수정에 실패했습니다.");
 						}
 				    });//ajax로 검색	
 				}

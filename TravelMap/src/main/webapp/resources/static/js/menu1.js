@@ -335,7 +335,7 @@ function showResult(points) {
 		$(`<div id="search-result_${i}" class="search-result row" data-pid="${el.id}" data-uid="${el.uid}">
 		<div style="cursor:pointer;padding:15px;" class="col-10" >${el.name}</div>
 			<div class="col-2">
-				<button class="btn btn-secondary search-result-btn" onclick="return loadReview('#search-result_${i}')">
+				<button class="btn btn-secondary search-result-btn" onclick="review_selected_div = '#search-result_${i}'; return loadReview('#search-result_${i}',1);">
 					<i class="fa fa-angle-right"></i>
 				</button>
 			</div>`)
@@ -385,48 +385,102 @@ function deletePoint(selectedDiv){
 
 /*-----review탭 관련-------*/
 
-function loadReview(selectedDiv) {
+function loadReview(selectedDiv,page) {
+	if(selectedDiv == null)
+		return;
+	review_selected_div = selectedDiv;
+	review_current_page = page;
+		
 	if(uid == $(selectedDiv).data('uid')) {
 		$('#point-delete-button').css('visibility','visible');
 		$("#point-delete-button").off('click').on('click',function(){deletePoint(selectedDiv);});
-		$("#review-write-button").off('click').on('click',function(){toggleReviewForm(true,selectedDiv);});
+		
 	}
 	else {
 		$('#point-delete-button').css('visibility','hidden');
+		
+	}
+	if(uid != null) {
+		$("#review-write-button").css('visibility','visible');
+		$("#review-write-button").off('click').on('click',function(){toggleReviewForm(true,selectedDiv);});
+	} else {
+		$("#review-write-button").css('visibility','hidden');
 	}
 	event.stopPropagation();
 	$('#review-list').empty();
-	shrinkToggle('review-list-wrapper');
+	if($('#review-list-wrapper').hasClass('shrink')) {
+		shrinkToggle('review-list-wrapper');
+	}
 	$('#search-result-wrapper').css('overflow-y','hidden');
 	
-	
-	
-	reviews.forEach((el,i) => {
-		$(`<div class="review-div">
-            <div class="review-title">${el.title}</div>
-            <div class="review-author">
-                <span class="author-name">${el.author}</span>
-                <img class="author-img" src="${el.country}.png">${el.country}</img>
-            </div>
-            <hr>
-            <div class="review-content">
-                ${el.preview}
-            </div>
-            <div class="more">
-                <span class="more-span" onclick="toggleReviewDetail(true);">
-                    more >
-                </span>
-            </div>
-        </div>`)
-		.appendTo('#review-list');
-		console.log(markers[i]);
-		$('#search-result_' + i).click(function (){
-			google.maps.event.trigger(markers[i], 'click');
-		});
-			
-	});
+	var sendData = {"pid": $(selectedDiv).data('pid') ,"page" : page};
+	console.log('deletePoint sendData',sendData);
+	$.ajax({
+        url:'get_reviews.action'
+        , method : 'POST'
+        , data: JSON.stringify(sendData)
+        ,contentType : 'application/json; charset=UTF-8'
+        ,dataType : 'json'
+        , success : function(resp) {
+			if(resp == null) {
+				return;
+			}
+			reviews.length = 0;
+			resp.reviews.forEach((el) => {
+				var review = {title :el.TITLE,preview:el.PREVIEW ,uid: el.USERID,country:el.COUNTRY ,rid: el.REVIEWID}
+				reviews.push(review);
+				
+			});
+			reviews.forEach((el,i) => {
+			$(`<div id="review-${el.rid}" class="review-div" data-rid="${el.rid}">
+	            <div class="review-title">${el.title}</div>
+	            <div class="review-author">
+	                <span class="author-name">${el.uid}</span>
+	                <img class="author-img" src="resources/static/img/${el.country}.png"></img>
+	            </div>
+	            <hr>
+	            <div class="review-content">
+	                ${el.preview}
+	            </div>
+	            <div class="more">
+	                <span class="more-span" onclick="toggleReviewDetail(true,'#review-${el.rid}');">
+	                    more >
+	                </span>
+	            </div>
+	        </div>`)
+			.appendTo('#review-list');
+			console.log(markers[i]);
+			$('#search-result_' + i).click(function (){
+				google.maps.event.trigger(markers[i], 'click');
+			});
+					
+			});
+	        $('#review-current-page').text(page);
+			$('#review-max-page').text(resp.maxPage);
+				
+	        }
+	   , error : function(error) {
+			$('#review-current-page').text(1);
+			$('#review-max-page').text(1);
+			review_current_page = 1;
+		    review_selected_div = null;
+			}
+    });//ajax로 검색
 	return false;
 }
+function reviewNext() {
+	if($('#review-current-page').text() >= $('#review-max-page').text()){
+		return;
+	}
+	loadReview(review_selected_div,review_current_page + 1);
+}
+function reviewPrev() {
+	if($('#review-current-page').text() == 1){
+		return;
+	}
+	loadReview(review_selected_div,review_current_page - 1);
+}
+
 
 function toggleReviewForm(flag,selectedDiv) {
 	if(uid == null) return;
@@ -441,9 +495,9 @@ function toggleReviewForm(flag,selectedDiv) {
 	}
 	
 }
-function toggleReviewDetail(flag) {
+function toggleReviewDetail(flag,reviewDiv) {
 	if(flag) {
-		$('#review-detail').load('review_detail.action');
+		$('#review-detail').load('review_detail.action',{"rid":$(reviewDiv).data('rid')});
 		$('#review-detail').css('display','block');
 		$('#review-form').css('display','none');
 	}
@@ -453,13 +507,24 @@ function toggleReviewDetail(flag) {
 	
 }//(more >) 버튼 눌렀을 때
 
-function sendReviewForm() {
-	//ajax;
-}// 리뷰 쓰기 눌렀을 때
+function loadNewComment(resp) {
+	console.log(resp);
+	$('#comment_list').append(`<li class="list-group-item">
+			<div class="comment_content">
+			<div class="fl">
+				<span class="nickname"><em>${resp.USERID}</em></span><!-- ajax -->
+				<span class="country"><img src="${resp.COUNTRY}.png"></span><!-- ajax -->
+				<span class="date_time">${resp.DATE}</span><!-- ajax -->
+			</div>
+			<div class="comment">
+				<p class="usertxt ub-word">${resp.CONTENT}</p><!-- ajax -->
+			</div>
+			<div class="fr">
+				<button type="button" class="btn btn-outline-danger btn-sm" onclick="deleteComment(this,${resp.COMMENTID})">삭제</button> <!-- ajax -->
+			</div>
+		</div>
+	</li>`);
+}//댓글 추가
 
-
-function writeButtonClick() {
-	
-}//새로운 리뷰 등록
 
 

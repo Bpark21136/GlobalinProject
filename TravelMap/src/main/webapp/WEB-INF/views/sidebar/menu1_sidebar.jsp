@@ -51,18 +51,19 @@
 			
 			</div>
 			<div style="display:flex;justify-content: center;">
-				<button style="width:24px;height:24px"class="btn btn-outline-secondary btn-sm" onclick="">
+				<button style="width:24px;height:24px"class="btn btn-outline-secondary btn-sm" onclick="reviewPrev()">
 		                   <i class="fa fa-angle-left"></i>
 		        </button>
 		        <span id="review-current-page">
-		        
+		        1
 		        </span>
 		        <span>
 		        /
 		        </span>
 		        <span id="review-max-page">
+		        1
 		        </span>
-		        <button style="width:24px;height:24px"class="btn btn-outline-secondary btn-sm" onclick="">
+		        <button style="width:24px;height:24px"class="btn btn-outline-secondary btn-sm" onclick="reviewNext()">
 		                   <i class="fa fa-angle-right"></i>
 		        </button>
 			</div>
@@ -71,5 +72,7 @@
 	<script>
 		var current_query = "";
 		var current_page = 1;
+		var review_current_page = 1;
+		var review_selected_div = null;
 	</script>
 </html>
