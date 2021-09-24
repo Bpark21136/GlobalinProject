@@ -66,8 +66,8 @@
 		});
 		
 		$("#idBtn").button().on('click', function() {
-			var id = $('#id').val();
-			checkId( id );
+			var userId = $('#userId').val();
+			checkId( userId );
 		});
 		
 		$("#emailBtn").button().on('click', function() {
@@ -76,11 +76,11 @@
 		});
 		
 	});
-	var checkId = function( id ){
+	var checkId = function( userId ){
 		$.ajax({
 			url: './duId.action',
 			data: {
-				id: id
+				userId: userId
 			},
 			type: 'post',
 			datatype: 'json',

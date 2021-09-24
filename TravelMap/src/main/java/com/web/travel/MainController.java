@@ -129,6 +129,7 @@ public class MainController {
 
 		accountDTO to = new accountDTO();
 		
+		System.out.println(request.getParameter("userId")+"뭐");
 		to.setUserId(request.getParameter("userId"));
 		
 		/* sql구문 실행 여부 확인용 변수*/
