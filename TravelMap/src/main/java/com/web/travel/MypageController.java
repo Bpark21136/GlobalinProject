@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.web.travel.dto.accountDTO;
+import com.web.travel.modelDAO.SecurityConfig;
 import com.web.travel.service.ArticleService;
 import com.web.travel.service.CommentService;
 import com.web.travel.service.MypageService;
@@ -68,34 +69,71 @@ public class MypageController {
 	@ResponseBody
 	@RequestMapping(value="/pw_check.do", method=RequestMethod.POST)
 	public Map<String,Object> pw_check(@RequestBody Map<String,String> map, HttpSession session) {
+		SecurityConfig enc = new SecurityConfig();
 		String pw = map.get("pw");
-		String pw64 = null;
+		String pwenc = enc.encryptionMain(pw);
 		String userId = session.getAttribute("userId").toString();
 		accountDTO dto =  ms.selectUser(userId);
-		
+		logger.debug("pwenc : " + pwenc);
+		logger.debug("userPW : " + dto.getHashedPassword());
 		Map<String,Object> ret = new HashMap<String, Object>();
-		if(pw64 != dto.getHashedPassword())
-			return null;
-		
+		if(!pwenc.equals(dto.getHashedPassword())) {
+			logger.debug("return error");
+			ret.put("code", -1);
+			return ret;
+		}
+		ret.put("code", 1);
 		return ret;	
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="/change_info.do", method=RequestMethod.POST)
 	public Map<String,Object> change_info(@RequestBody Map<String,String> map, HttpSession session) {
+		SecurityConfig enc = new SecurityConfig();
 		String pw = map.get("newPw");
 		String country = map.get("country");
-		String pw64 = null;
+		String pwenc = enc.encryptionMain(pw);
 		String userId = session.getAttribute("userId").toString();
 		accountDTO dto =  new accountDTO();
+		dto.setCountry(country);
+		dto.setHashedPassword(pwenc);
+		dto.setUserId(userId);
 		logger.debug(dto.getHashedPassword());
 		
-		ms.updateUserInfo(accountDTO dto);
+		int code = ms.updateUserInfo(dto);
 		Map<String,Object> ret = new HashMap<String, Object>();
-		if(pw64 != dto.getHashedPassword())
+		
+		if(code != 1)
 			return null;
 		
+		ret.put("code", 1);
 		return ret;	
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/delete_user.do", method=RequestMethod.POST)
+	public Map<String,Object> delete_user(@RequestBody Map<String,String> map, HttpSession session) {
+		Map<String,Object> ret = pw_check(map,session);
+		if((Integer) ret.get("code") != 1) {
+			return ret;
+		}
+		String userId = session.getAttribute("userId").toString();
+		
+		int code = ms.deleteUser(userId);
+		
+		if(code != 1)
+			return null;
+		
+		session.invalidate();
+		
+		ret.put("code", 1);
+		return ret;	
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/delete_info.do", method=RequestMethod.POST)
+	public Map<String,Object> delete_info(@RequestBody Map<String,String> map, HttpSession session) {
+		return null;
 	}
 	
 	

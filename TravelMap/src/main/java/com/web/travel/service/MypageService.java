@@ -7,4 +7,8 @@ public interface MypageService {
 
 	accountDTO selectUser(String userId);
 
+	int updateUserInfo(accountDTO dto);
+
+	int deleteUser(String userId);
+
 }

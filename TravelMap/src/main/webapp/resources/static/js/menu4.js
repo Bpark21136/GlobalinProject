@@ -31,6 +31,29 @@ function myArticlesButtonClick(page) {
 	history.pushState('','', '?menu=' + menu +'&&' + 'view=my_articles' + '&&page='+ page);
 	loadMyArticlesPage(page);
 }
+function deleteUserButtonClick() {
+	var pw = prompt('패스워드를 입력해주세요');
+	var sendData = {"pw":pw};
+	console.log('deleteReview sendData',sendData);
+	$.ajax({
+        url:'delete_user.do'
+        , method : 'POST'
+        , data: JSON.stringify(sendData)
+        ,contentType : 'application/json; charset=UTF-8'
+        ,dataType : 'json'
+        , success : function(resp) {
+			if(resp.code == -1) {
+				alert("비밀먼호가 틀렸습니다.");
+				return;
+			}
+			alert("회원탈퇴완료");
+			location.href='start.action';
+        }
+	    , error : function(error) {
+			alert("오류가 발생했습니다.");
+		}
+    });//ajax로 검색
+}
 
 
 function loadmyReviewsDetail(rid) {
@@ -72,3 +95,4 @@ function viewMyReviewDetail() {
 		loadmyReviewsDetail(rid);
 	});
 }
+

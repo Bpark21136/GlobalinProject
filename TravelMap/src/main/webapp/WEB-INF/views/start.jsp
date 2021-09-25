@@ -162,7 +162,7 @@
 		        	//마이페이지
 	        	}
 	        	if (urlParams.get('view') == 'change') {
-	        		loadUserInfoChange()//회원정보 수정
+	        		loadUserInfoChange();//회원정보 수정
 		        } else if(urlParams.get('view') == 'my_reviews') {
 		        	loadReviewPage(urlParams.get('page'));//내 리뷰
 		        } else if(urlParams.get('view') == 'my_reviews_detail') {

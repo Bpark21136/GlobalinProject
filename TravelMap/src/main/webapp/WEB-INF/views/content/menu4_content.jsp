@@ -44,6 +44,7 @@
 						<button class="my-fixed-btn" onclick="userInfoChangeButtonClick()">회원정보 수정</button>
 						<button class="my-bbs-btn" onclick="myReviewButtonClick(1)">내 리뷰</button>
 						<button class="my-bbs-btn" onclick="myArticlesButtonClick(1)">내 게시글</button>
+						<button class="my-bbs-btn" onclick="deleteUserButtonClick()">회원 탈퇴</button>
 					</ol>
 				</fieldset>
 			</div>

@@ -19,4 +19,18 @@ public class MyPageServiceImpl implements MypageService {
 		return mm.selectUser(userId);
 	}
 
+
+	@Override
+	public int updateUserInfo(accountDTO dto) {
+		// TODO Auto-generated method stub
+		return mm.updateUser(dto);
+	}
+
+
+	@Override
+	public int deleteUser(String uid) {
+		// TODO Auto-generated method stub
+		return mm.deleteUser(uid);
+	}
+
 }

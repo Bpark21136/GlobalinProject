@@ -31,7 +31,7 @@
 						</div>
 					<hr>
 					</header>
-					<form action="" class="ch-form">
+					<form id="update" class="ch-form" onsubmit="return false;">
 						<ol class="ch-old">
 						    <div class="id">ID : ${userId} </div>
 						    <div class="email">Email : ${email}</div>
@@ -45,14 +45,23 @@
 							        <option value="Others" <%=request.getAttribute("country").toString().equals("Others") ? "selected=\"selected\"" : "" %>>Others</option>
 							    </select>
 						    </div>
-							<button class="ch-fixed-btn" onclick="pwCheck($('#now-pwd').val(),$('#new-pwd').val(),$('#sel option:selected').val())">수정완료</button>
+							<button class="ch-fixed-btn" onclick="updateButtonClick()">수정완료</button>
 						</ol>
+						"pwCheck($('#now-pwd').val(),$('#new-pwd').val(),$('#sel option:selected').val())"
 					</form>
 				</fieldset>
 			</div>
 		</div>
 	</div>
 	<script type="text/javascript">
+	function updateButtonClick() {
+		console.log('click');
+		$("#update").submit( function(e) {
+			console.log('submit');
+			e.preventDefault();
+			pwCheck($('#now-pwd').val(),$('#new-pwd').val(),$('#sel option:selected').val());
+		});
+	}
 		function pwCheck(pw,newPw,country) {
 			console.log(pw,newPw,country);
 			if($('#new-pwd').val() != $('#new-pwd2').val()) {
@@ -60,7 +69,7 @@
 				return;
 			}
 			var sendData = {"pw": pw};
-			console.log('deleteReview sendData',sendData);
+			console.log('pwCheck sendData',sendData);
 			$.ajax({
 		        url:'pw_check.do'
 		        , method : 'POST'
@@ -68,12 +77,17 @@
 		        ,contentType : 'application/json; charset=UTF-8'
 		        ,dataType : 'json'
 		        , success : function(resp) {
-					if(resp == null) {
+		        	console.log('resp' + JSON.stringify(resp));
+					if(resp.code != 1) {
 						alert("현재 패스워드가 틀렸습니다.");
+						return;
 					}
+					console.log('pwCheck OK');
 					changeInfo(pw,newPw,country);
 		        }
 			    , error : function(error) {
+			    	console.log('error' + JSON.stringify(error));
+			    	
 					alert("오류가 발생했습니다.");
 				}
 		    });//ajax로 검색
@@ -93,6 +107,7 @@
 		        , success : function(resp) {
 					if(resp == null) {
 						alert("오류가 발생했습니다.");
+						return;
 					}
 					alert("회원정보가 수정되었습니다.");
 					location.href='start.action?menu=4';
