@@ -32,88 +32,88 @@
 </head>
 
 <script type="text/javascript">
-var isCheckId = 0;
-var isCheckEmail = 0;
-$(document).ready(function() {
-	
-	$("#btn").button().on('click', function() {
-		//alert('click');
-		if( $('#userId').val().trim() == "" ){
-			alert('아이디 입력 오류입니다.');
-			return false;
-		}
-		if( $('#password').val().trim() == "" ){
-			alert('패스워드 입력 오류입니다.');
-			return false;
-		}
-		if( $('#password').val() != $('#password_ok').val() ){
-			alert('패스워드를 정확히 입력 해주세요.');
-			return false;
-		}
-		if( $('#email').val().trim() == "" ){
-			alert('이메일 입력 오류입니다.');
-			return false;
-		}
-		if( isCheckId == 0 ){
-			alert('ID 중복을 확인하세요.');
-			return false;
-		}
-		if( isCheckEmail == 0 ){
-			alert('Email 중복을 확인하세요.');
-			return false;
-		}
-		$("#form").submit();
-	});
-	
-	$("#idBtn").button().on('click', function() {
-		var id = $('#id').val();
-		checkId( id );
-	});
-	
-	$("#emailBtn").button().on('click', function() {
-		var email = $('#email').val();
-		checkEmail( email );
-	});
-	
-});
-var checkId = function( id ){
-	$.ajax({
-		url: './duId.action',
-		data: {
-			id: id
-		},
-		type: 'post',
-		datatype: 'json',
-		success: function( json ) {
-			if( json.sqlOK == 1 ){
-				alert("이미 존재하는 ID입니다.");
-			} else {
-				alert('사용 가능한 ID입니다.');
-				isCheckId = 1;
+	var isCheckId = 0;
+	var isCheckEmail = 0;
+	$(document).ready(function() {
+		
+		$("#btn").button().on('click', function() {
+			//alert('click');
+			if( $('#userId').val().trim() == "" ){
+				alert('아이디 입력 오류입니다.');
+				return false;
 			}
-		}
+			if( $('#password').val().trim() == "" ){
+				alert('패스워드 입력 오류입니다.');
+				return false;
+			}
+			if( $('#password').val() != $('#password_ok').val() ){
+				alert('패스워드를 정확히 입력 해주세요.');
+				return false;
+			}
+			if( $('#email').val().trim() == "" ){
+				alert('이메일 입력 오류입니다.');
+				return false;
+			}
+			if( isCheckId == 0 ){
+				alert('ID 중복을 확인하세요.');
+				return false;
+			}
+			if( isCheckEmail == 0 ){
+				alert('Email 중복을 확인하세요.');
+				return false;
+			}
+			$("#form").submit();
+		});
+		
+		$("#idBtn").button().on('click', function() {
+			var userId = $('#userId').val();
+			checkId( userId );
+		});
+		
+		$("#emailBtn").button().on('click', function() {
+			var email = $('#email').val();
+			checkEmail( email );
+		});
 		
 	});
-}
-var checkEmail = function( email ){
-	$.ajax({
-		url: './duEmail.action',
-		data: {
-			email: email
-		},
-		type: 'post',
-		datatype: 'json',
-		success: function( json ) {
-			if( json.sqlOK == 1 ){
-				alert("이미 존재하는 email입니다.");
-			} else {
-				alert('사용 가능한 email입니다.');
-				isCheckEmail = 1;
+	var checkId = function( userId ){
+		$.ajax({
+			url: './duId.action',
+			data: {
+				userId: userId
+			},
+			type: 'post',
+			datatype: 'json',
+			success: function( json ) {
+				if( json.sqlOK == 1 ){
+					alert("이미 존재하는 ID입니다.");
+				} else {
+					alert('사용 가능한 ID입니다.');
+					isCheckId = 1;
+				}
 			}
-		}
-		
-	});
-}
+			
+		});
+	}
+	var checkEmail = function( email ){
+		$.ajax({
+			url: './duEmail.action',
+			data: {
+				email: email
+			},
+			type: 'post',
+			datatype: 'json',
+			success: function( json ) {
+				if( json.sqlOK == 1 ){
+					alert("이미 존재하는 email입니다.");
+				} else {
+					alert('사용 가능한 email입니다.');
+					isCheckEmail = 1;
+				}
+			}
+			
+		});
+	}
 </script>
 <body>
 <div class="login-box">
