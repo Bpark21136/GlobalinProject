@@ -41,7 +41,7 @@
 					    <div class="국적">국적 : ${country}</div>
 					
 					
-						<button class="my-fixed-btn" onclick="">회원정보 수정</button>
+						<button class="my-fixed-btn" onclick="userInfoChangeButtonClick()">회원정보 수정</button>
 						<button class="my-bbs-btn" onclick="myReviewButtonClick(1)">내 리뷰</button>
 						<button class="my-bbs-btn" onclick="myArticlesButtonClick(1)">내 게시글</button>
 					</ol>

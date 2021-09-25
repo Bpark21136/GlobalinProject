@@ -147,7 +147,7 @@ function createNewPointModeButton(controlDiv) {
   defaultButton.style.lineHeight = "38px";
   defaultButton.style.paddingLeft = "5px";
   defaultButton.style.paddingRight = "5px";
-  defaultButton.innerHTML = "장소 추가 | 場所追加";
+  defaultButton.innerHTML = "장소 추가";
   controlUI.appendChild(defaultButton);
 
   const cancelOkButton = document.createElement("div");

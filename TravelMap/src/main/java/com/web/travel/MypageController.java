@@ -1,6 +1,7 @@
 package com.web.travel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -10,9 +11,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.web.travel.dto.accountDTO;
@@ -49,9 +52,56 @@ public class MypageController {
 		model.addAttribute("country",user.getCountry());
 		return "content/menu4_content";
 	}
+	@RequestMapping("/change_user_info.do")
+	public String homexxx(Model model, HttpSession session) {
+		logger.info("log : home");
+		
+		String userId = (String) session.getAttribute("userId");
+		accountDTO user = ms.selectUser(userId);
+		
+		model.addAttribute("userId", userId);
+		model.addAttribute("email",user.getEmail());
+		model.addAttribute("country",user.getCountry());
+		return "myPage/change";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/pw_check.do", method=RequestMethod.POST)
+	public Map<String,Object> pw_check(@RequestBody Map<String,String> map, HttpSession session) {
+		String pw = map.get("pw");
+		String pw64 = null;
+		String userId = session.getAttribute("userId").toString();
+		accountDTO dto =  ms.selectUser(userId);
+		
+		Map<String,Object> ret = new HashMap<String, Object>();
+		if(pw64 != dto.getHashedPassword())
+			return null;
+		
+		return ret;	
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/change_info.do", method=RequestMethod.POST)
+	public Map<String,Object> change_info(@RequestBody Map<String,String> map, HttpSession session) {
+		String pw = map.get("newPw");
+		String country = map.get("country");
+		String pw64 = null;
+		String userId = session.getAttribute("userId").toString();
+		accountDTO dto =  new accountDTO();
+		logger.debug(dto.getHashedPassword());
+		
+		ms.updateUserInfo(accountDTO dto);
+		Map<String,Object> ret = new HashMap<String, Object>();
+		if(pw64 != dto.getHashedPassword())
+			return null;
+		
+		return ret;	
+	}
+	
+	
 	
 	@RequestMapping("/my_reviews.do")
-	public String home(Model model,@RequestParam(value="page",defaultValue="1") int page, HttpSession session) {
+	public String homeadad(Model model,@RequestParam(value="page",defaultValue="1") int page, HttpSession session) {
 		logger.info("log : home");
 		
 		String userId = (String) session.getAttribute("userId");

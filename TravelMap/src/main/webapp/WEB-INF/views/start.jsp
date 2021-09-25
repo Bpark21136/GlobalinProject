@@ -162,15 +162,13 @@
 		        	//마이페이지
 	        	}
 	        	if (urlParams.get('view') == 'change') {
-		        	//회원정보 수정
-		        } else if(urlParams.get('view') == 'mygeshigle') {
-		        	//내 게시글
+	        		loadUserInfoChange()//회원정보 수정
 		        } else if(urlParams.get('view') == 'my_reviews') {
 		        	loadReviewPage(urlParams.get('page'));//내 리뷰
 		        } else if(urlParams.get('view') == 'my_reviews_detail') {
 		        	loadmyReviewsDetail(urlParams.get('rid'));
 		        } else if(urlParams.get('view') == 'my_articles') {
-		        	loadMyArticlesPage(urlParams.get('page'));//내 리뷰
+		        	loadMyArticlesPage(urlParams.get('page'));//내 게시글
 		        } else if(urlParams.get('view') == 'bbsView') {
 		        	loadbbsView(urlParams.get('aid'));
 		        }

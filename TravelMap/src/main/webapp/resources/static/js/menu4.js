@@ -1,6 +1,10 @@
 /**
  * js for menu2(마이페이지)
  */
+
+function loadUserInfoChange() {
+	$('#page-content-wrapper').load('change_user_info.do');
+}
 function loadReviewPage(page) {
 	//history.pushState('','', '?menu=' + mid +'&&' + 'page='+page);
 	if(page == null || page < 1) {
@@ -14,6 +18,10 @@ function loadMyArticlesPage(page) {
 		page = 1;
 	}
 	$('#page-content-wrapper').load('my_articles.do?page=' + page);
+}
+function userInfoChangeButtonClick() {
+	history.pushState('','', '?menu=' + menu +'&&' + 'view=change');
+	loadUserInfoChange();
 }
 function myReviewButtonClick(page) {
 	history.pushState('','', '?menu=' + menu +'&&' + 'view=my_reviews' + '&&page='+ page);
