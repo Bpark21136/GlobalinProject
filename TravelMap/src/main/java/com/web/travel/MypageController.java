@@ -1,6 +1,7 @@
 package com.web.travel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -10,12 +11,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.web.travel.dto.accountDTO;
+import com.web.travel.modelDAO.SecurityConfig;
 import com.web.travel.service.ArticleService;
 import com.web.travel.service.CommentService;
 import com.web.travel.service.MypageService;
@@ -49,9 +53,93 @@ public class MypageController {
 		model.addAttribute("country",user.getCountry());
 		return "content/menu4_content";
 	}
+	@RequestMapping("/change_user_info.do")
+	public String homexxx(Model model, HttpSession session) {
+		logger.info("log : home");
+		
+		String userId = (String) session.getAttribute("userId");
+		accountDTO user = ms.selectUser(userId);
+		
+		model.addAttribute("userId", userId);
+		model.addAttribute("email",user.getEmail());
+		model.addAttribute("country",user.getCountry());
+		return "myPage/change";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/pw_check.do", method=RequestMethod.POST)
+	public Map<String,Object> pw_check(@RequestBody Map<String,String> map, HttpSession session) {
+		SecurityConfig enc = new SecurityConfig();
+		String pw = map.get("pw");
+		String pwenc = enc.encryptionMain(pw);
+		String userId = session.getAttribute("userId").toString();
+		accountDTO dto =  ms.selectUser(userId);
+		logger.debug("pwenc : " + pwenc);
+		logger.debug("userPW : " + dto.getHashedPassword());
+		Map<String,Object> ret = new HashMap<String, Object>();
+		if(!pwenc.equals(dto.getHashedPassword())) {
+			logger.debug("return error");
+			ret.put("code", -1);
+			return ret;
+		}
+		ret.put("code", 1);
+		return ret;	
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/change_info.do", method=RequestMethod.POST)
+	public Map<String,Object> change_info(@RequestBody Map<String,String> map, HttpSession session) {
+		SecurityConfig enc = new SecurityConfig();
+		String pw = map.get("newPw");
+		String country = map.get("country");
+		String pwenc = enc.encryptionMain(pw);
+		String userId = session.getAttribute("userId").toString();
+		accountDTO dto =  new accountDTO();
+		dto.setCountry(country);
+		dto.setHashedPassword(pwenc);
+		dto.setUserId(userId);
+		logger.debug(dto.getHashedPassword());
+		
+		int code = ms.updateUserInfo(dto);
+		Map<String,Object> ret = new HashMap<String, Object>();
+		
+		if(code != 1)
+			return null;
+		
+		ret.put("code", 1);
+		return ret;	
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/delete_user.do", method=RequestMethod.POST)
+	public Map<String,Object> delete_user(@RequestBody Map<String,String> map, HttpSession session) {
+		Map<String,Object> ret = pw_check(map,session);
+		if((Integer) ret.get("code") != 1) {
+			return ret;
+		}
+		String userId = session.getAttribute("userId").toString();
+		
+		int code = ms.deleteUser(userId);
+		
+		if(code != 1)
+			return null;
+		
+		session.invalidate();
+		
+		ret.put("code", 1);
+		return ret;	
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/delete_info.do", method=RequestMethod.POST)
+	public Map<String,Object> delete_info(@RequestBody Map<String,String> map, HttpSession session) {
+		return null;
+	}
+	
+	
 	
 	@RequestMapping("/my_reviews.do")
-	public String home(Model model,@RequestParam(value="page",defaultValue="1") int page, HttpSession session) {
+	public String homeadad(Model model,@RequestParam(value="page",defaultValue="1") int page, HttpSession session) {
 		logger.info("log : home");
 		
 		String userId = (String) session.getAttribute("userId");
