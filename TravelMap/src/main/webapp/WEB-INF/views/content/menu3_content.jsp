@@ -29,66 +29,84 @@
                 
                 <div class="accordion-item" id="question1">
                     <a class="accordion-link" href="#question1">
-                        게시판은 어떻게 이용하나요?
+                        1. 회원가입은 어떻게 이용하나요?
                         <i class="fas fa-plus"></i>
                         <i class="fas fa-minus"></i>
                     </a>
                     <div class="answer">
                         <p>
-                            먼저, 회원가입을 하시고 로그인을 하세요. 그리고 게시판 탭으로 들어가서 글쓰기 버튼을 누르세요.
-                            마지막으로 제목과 글을 작성하신 후에 작성하기 버튼을 누르시면 됩니다.
+                            먼저, 로그인 버튼을 누르세요. 그리고 하단의 회원가입을 누르세요. <br>
+                            그 다음 아이디를 설정하신 후, 중복 검사 버튼을 누르세요. <br>
+                            그 다음 비밀번호를 설정하신 후, 비밀번호 확인 란에 다시 한번 작성해주세요. <br>
+                            그 다음 이메일을 설정하신 후, 중복 검사 버튼을 누르세요. <br>
+                            마지막으로 국적을 선택하신 후, 회원가입을 누르시면 가입이 완료됩니다.
                         </p>
                     </div>
                 </div>
 
                 <div class="accordion-item" id="question2">
                     <a class="accordion-link" href="#question2">
-                        메인 페이지는 어떻게 사용하나요?
+                        2. 리뷰 남길 장소를 추가하고 싶어요!
                         <i class="fas fa-plus"></i>
                         <i class="fas fa-minus"></i>
                     </a>
                     <div class="answer">
                         <p>
-                            그러게요
+                            먼저, 로그인을 하세요. 그리고 지도 페이지 하단의 장소 추가 버튼을 누르세요 <br>
+                            그 후, 추가할 장소에 핀을 찍고, 'OK' 버튼을 누르세요. <br>
+                            추가할 장소의 이름을 입력하고 확인 버튼을 누르시면 장소가 추가됩니다.
                         </p>
                     </div>
                 </div>
 
                 <div class="accordion-item" id="question3">
                     <a class="accordion-link" href="#question3">
-                        내가 갔다 온 곳의 리뷰를 남기고 싶어요!
+                        3. 내가 갔다 온 곳의 리뷰를 어떻게 남기나요?
                         <i class="fas fa-plus"></i>
                         <i class="fas fa-minus"></i>
                     </a>
                     <div class="answer">
                         <p>
-                            마음 속에 간직하세요^^
+                            먼저, 2번의 방법으로 리뷰를 남길 장소를 추가하세요. <br>
+                            장소 추가 후, 사이드 바의 검색 버튼을 눌러 장소를 검색하세요. <br>
+                            리뷰를 남기실 장소를 선택하고, 우측 '>' 버튼을 누르세요. <br>
+                            그 후, 사이드 바 우측 상단의 리뷰쓰기 버튼을 누르세요. <br>
+                            화면에 나온 리뷰쓰기 페이지에서 리뷰를 작성한 후, 등록을 누르시면 됩니다.
                         </p>
                     </div>
                 </div>
 
                 <div class="accordion-item" id="question4">
                     <a class="accordion-link" href="#question4">
-                        이 회사에 지원 하고 싶은 걸요?
+                        4. 게시판 글을 쓰거나 댓글을 남기고 싶은데 어떻게 해야 하나요?
                         <i class="fas fa-plus"></i>
                         <i class="fas fa-minus"></i>
                     </a>
                     <div class="answer">
                         <p>
-                            이 회사는 곧 해체됩니다.
+                            먼저, 로그인을 하세요. 게시글 탭을 누르세요. <br>
+                            그 후, 우측 하단의 글쓰기 버튼을 누르세요. <br>
+                            게시글 쓰기 페이지에서 글을 작성하신 후, 등록 버튼을 눌러 게시하세요. <br>
+                            그리고 댓글을 남기려면 댓글을 남기고 싶은 글의 제목을 선택하세요. <br>
+                            글에 들어가신 후, 하단 댓글 입력 란에 댓글을 작성하시고, 등록 버튼을 누르세요.
                         </p>
                     </div>
                 </div>
 
                 <div class="accordion-item" id="question5">
                     <a class="accordion-link" href="#question5">
-                        회사에 연락드리고 싶어요!
+                        5. 회원 정보는 어떻게 수정하나요?
                         <i class="fas fa-plus"></i>
                         <i class="fas fa-minus"></i>
                     </a>
                     <div class="answer">
                         <p>
-                            하단 문의 창구를 통해 연락주세요.
+                            먼저, My Page 탭을 누르세요. <br>
+                            그 후, 회원정보 수정 버튼을 누르세요. <br>
+                            현재 PW에 현재 비밀번호를 입력하시고, 새로운 PW에 새로운 비밀번호를 입력하세요. <br>
+                            PW 확인에 새로운 비밀번호를 다시 한번 입력하세요. <br>
+                            국적을 수정하실 경우에는 국적을 다시 선택하세요. <br>
+                            수정이 끝났다면 수정완료 버튼을 누르세요.
                         </p>
                     </div>
                 </div>
