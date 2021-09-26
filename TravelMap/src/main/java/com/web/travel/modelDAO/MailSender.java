@@ -22,7 +22,7 @@ public class MailSender {
 	public void sendMailMain(String email, String authNumber) {
 		// TODO Auto-generated method stub
 		String toEmail = email;
-		String toName = "ZipZom";
+		String toName = "TravelMap";
 		String oSubject = "요청하신 인증번호입니다.";
 		// StringBuffer
 		// String content = "<html><head><meta charset='utf-8'/></head><body><font color='red'>내용 테스트</font></body></html>";
