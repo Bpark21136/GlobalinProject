@@ -23,7 +23,7 @@
 	</div>
 	<div id="change">
 		<div class="container ch-center">
-			<div class="div1" style="border: solid 0 hidden; width: 500px; height: 430px; border-radius: 20px;">
+			<div class="div1" style="border: solid 0 hidden; width: 500px; border-radius: 20px;">
 			    <fieldset style="border: 0ch;">
 					<header id="ch-head">
 						<div class="text-area">
@@ -36,8 +36,13 @@
 						    <div class="id">ID : ${userId} </div>
 						    <div class="email">Email : ${email}</div>
 						    <div class="pwd1"><label for="now-pwd"> 현재 PW : </label> <input  id="now-pwd" type="password" name="now-pwd" required></div>
-						    <div class="pwd2"><label for="new-pwd"> 새로운 PW : </label> <input id="new-pwd" type="password" name="new-pwd" placeholder="빈칸:패스워드 변경안함"></div>
-						    <div class="pwd2"><label for="new-pwd2"> PW 확인 : </label> <input id="new-pwd2" type="password" name="new-pwd2" placeholder="빈칸:패스워드 변경안함"></div>
+						    <div class="pwd2"><label for="new-pwd"> 새로운 PW : </label> <input id="new-pwd" type="password" name="new-pwd" placeholder="">
+						    <div style="font-style: italic ; font-size: small;">*패스워드 변경을 원하지 않으시면 비워두세요</div></div>
+						    
+						    <div class="pwd2"><label for="new-pwd2"> PW 확인 : </label> <input id="new-pwd2" type="password" name="new-pwd2" placeholder="">
+						    <div style="font-style: italic ; font-size: small;">*패스워드 변경을 원하지 않으시면 비워두세요</div></div>
+						   
+						    <hr>
 						    <div class="국적">국적 : 
 							    <select id="sel">
 							        <option value="KOR" <%=request.getAttribute("country").toString().equals("KOR") ? "selected=\"selected\"" : "" %>>한국</option>
@@ -47,7 +52,6 @@
 						    </div>
 							<button class="ch-fixed-btn" onclick="updateButtonClick()">수정완료</button>
 						</ol>
-						"pwCheck($('#now-pwd').val(),$('#new-pwd').val(),$('#sel option:selected').val())"
 					</form>
 				</fieldset>
 			</div>
