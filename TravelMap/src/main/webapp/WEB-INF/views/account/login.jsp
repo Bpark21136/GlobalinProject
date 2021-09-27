@@ -14,6 +14,11 @@
 <!-- jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="./webjars/jquery/3.6.0/dist/jquery.min.js"></script>
+<style type="text/css">
+	#logo:hover {
+    	cursor: pointer;
+	}
+</style>
 <script type="text/javascript">
 	$(document).ready(function () {
 		$('#logo').addClass('animated fadeInDown');
@@ -63,7 +68,7 @@
 <body>
 	<div class="container">
 		<div class="top">
-			<h1 style="width: 400px;" id="title" class="hidden"><span id="logo">Travel<span>Map</span></span></h1>
+			<h1 style="width: 400px;" id="title" class="hidden"><span id="logo" onclick="window.location='./start.action';">Travel<span>Map</span></span></h1>
 		</div>
 		<form method="post" id="login">
 		<div class="login-box">
