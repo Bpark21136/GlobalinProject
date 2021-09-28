@@ -33,7 +33,7 @@
 	  <div id="sidebar-wrapper">
 	    <ul class="sidebar-nav">
 	      <li class="sidebar-brand">
-	        <a href="#">
+	        <a href="./start.action">
 	        	<img src="<c:url value="/resources/static/img/logo2.png"/>">
 	        </a>
 	      </li>
